@@ -6,16 +6,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/app_bar_survey"
-        tools:context=".SurveyActivity">
+        tools:context=".activity.SurveyActivity">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <!--<me.kaelaela.verticalviewpager.VerticalViewPager-->
+            <!--android:id="@+id/viewPager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
+    <echo.com.surveys.view.VerticalViewPager
+    android:id="@+id/viewPager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="@dimen/indexer_width"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_32"
+            android:layout_marginBottom="@dimen/margin_32"
+            android:layout_marginEnd="@dimen/margin_16"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </android.support.constraint.ConstraintLayout>

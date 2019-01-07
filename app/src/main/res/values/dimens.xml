@@ -5,4 +5,12 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_16">8dp</dimen>
+    <dimen name="rounding_radius">15dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
+    <dimen name="survey_title_top_margin">80dp</dimen>
+    <dimen name="indexer_width">32dp</dimen>
+    <dimen name="survey_title_margin">48dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
 </resources>

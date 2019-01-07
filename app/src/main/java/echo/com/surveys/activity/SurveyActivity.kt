@@ -1,18 +1,25 @@
-package echo.com.surveys
+package echo.com.surveys.activity
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.layout_survey_activity.*
+import echo.com.surveys.R
+import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
+import echo.com.surveys.model.Survey
 import kotlinx.android.synthetic.main.app_bar_survey.*
+import kotlinx.android.synthetic.main.content_survey.*
+import kotlinx.android.synthetic.main.layout_survey_activity.*
 
-class SurveyActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+
+class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    lateinit var adapter: SurveyFragmentPagerAdapter
+    var surveys: ArrayList<Survey> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_survey_activity)
@@ -24,13 +31,40 @@ class SurveyActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
 
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        initAdapter()
+        loadSurveys()
     }
+
+    private fun initAdapter() {
+        adapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(),surveys)
+        viewPager.adapter = adapter
+    }
+
+
+    fun loadSurveys(){
+        surveys.clear()
+        val survey1 = Survey("https://homepages.cae.wisc.edu/~ece533/images/airplane.png","Title1","Description1")
+        val survey2 = Survey("https://homepages.cae.wisc.edu/~ece533/images/arctichare.png","Title2","Description2")
+        val survey3 = Survey("https://homepages.cae.wisc.edu/~ece533/images/baboon.png","Title3","Description3")
+        surveys.add(survey1)
+        surveys.add(survey2)
+        surveys.add(survey3)
+        updateViewPager()
+    }
+
+    fun updateViewPager(){
+        adapter.notifyDataSetChanged()
+    }
+
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -51,7 +85,10 @@ class SurveyActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_refresh -> {
+                loadSurveys()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
