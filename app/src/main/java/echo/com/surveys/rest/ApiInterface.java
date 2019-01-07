@@ -3,18 +3,16 @@ package echo.com.surveys.rest;
 import echo.com.surveys.model.Auth;
 import echo.com.surveys.model.AuthRequest;
 import echo.com.surveys.model.Survey;
-import echo.com.surveys.model.SurveyRequest;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
+import retrofit2.http.*;
 
 import java.util.List;
 
 public interface ApiInterface {
 
-    @POST("surveys.json")
-    Call<List<Survey>> getSurveys(@Body SurveyRequest surveyRequest);
+    @GET("/surveys.json")
+    Call<List<Survey>> getSurveys(@Query("access_token") String token);
 
-    @POST("oauth/token")
+    @POST("/oauth/token")
     Call<Auth> getToken(@Body AuthRequest authRequest);
 }

@@ -41,12 +41,9 @@ public class ApiClient {
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-
                     .client(okHttpClient)
-
                     .build();
         }
         return retrofit;

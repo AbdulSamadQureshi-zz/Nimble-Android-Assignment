@@ -23,8 +23,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:src="@drawable/placeholder"
                 tools:scaleType="fitXY"
+                android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="match_parent"/>
+
+        <View android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:background="@color/survey_overlay"/>
 
         <TextView
                 android:id="@+id/title"
@@ -58,11 +63,6 @@
                 android:paddingEnd="@dimen/survey_title_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-
-        <View android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:background="@color/survey_overlay"/>
 
 
     </android.support.constraint.ConstraintLayout>

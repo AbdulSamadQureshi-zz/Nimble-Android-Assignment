@@ -14,7 +14,6 @@ import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
 import echo.com.surveys.model.Auth
 import echo.com.surveys.model.AuthRequest
 import echo.com.surveys.model.Survey
-import echo.com.surveys.model.SurveyRequest
 import echo.com.surveys.rest.ApiUtils
 import echo.com.surveys.util.DialogUtils
 import echo.com.surveys.util.SharedPrefUtility
@@ -85,7 +84,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         if(showProgress){
             showProgress()
         }
-        ApiUtils.getAPIService(this).getSurveys(SurveyRequest(token)).enqueue(object: Callback<List<Survey>> {
+        ApiUtils.getAPIService(this).getSurveys(token).enqueue(object: Callback<List<Survey>> {
             override fun onFailure(call: Call<List<Survey>>, t: Throwable) {
                 hideProgres()
                 DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
