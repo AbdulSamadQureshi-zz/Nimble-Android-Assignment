@@ -8,14 +8,20 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".activity.SurveyActivity">
 
-    <!--<me.kaelaela.verticalviewpager.VerticalViewPager-->
-            <!--android:id="@+id/viewPager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"/>-->
+    <ProgressBar
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     <echo.com.surveys.view.VerticalViewPager
-    android:id="@+id/viewPager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+            android:id="@+id/viewPager"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="@dimen/indexer_width"

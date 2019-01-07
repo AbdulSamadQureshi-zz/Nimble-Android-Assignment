@@ -14,9 +14,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Created by ibraheem on 09/12/2017.
- */
 
 public class ImageUtil {
 

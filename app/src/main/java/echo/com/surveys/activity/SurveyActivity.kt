@@ -5,8 +5,10 @@ import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import echo.com.surveys.R
 import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
 import echo.com.surveys.model.Auth
@@ -14,7 +16,6 @@ import echo.com.surveys.model.AuthRequest
 import echo.com.surveys.model.Survey
 import echo.com.surveys.model.SurveyRequest
 import echo.com.surveys.rest.ApiUtils
-import echo.com.surveys.util.Constants
 import echo.com.surveys.util.DialogUtils
 import echo.com.surveys.util.SharedPrefUtility
 import kotlinx.android.synthetic.main.app_bar_survey.*
@@ -48,9 +49,8 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
         initAdapter()
-        loadSurveys()
+        reloadSurveys()
     }
 
     private fun initAdapter() {
@@ -61,40 +61,50 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     fun getAccessToken(){
         val authRequest = AuthRequest()
-        ApiUtils.getAPIService(this).getToken(authRequest).enqueue(object: Callback<Auth>{
+        showProgress()
+        ApiUtils.getAPIService(this).getToken(authRequest).enqueue(object: Callback<Auth> {
             override fun onFailure(call: Call<Auth>, t: Throwable) {
-                DialogUtils.showToast(SurveyActivity.this, getString(R.string.general_error))            }
+                hideProgres()
+                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+            }
 
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
+                hideProgres()
                 if(response.body() != null){
-                    SharedPrefUtility.getInstance(SurveyActivity.this).updateAuth(response.body())
-                    loadSurveys()
+                    SharedPrefUtility.getInstance(this@SurveyActivity).updateAuth(response.body())
+                    loadSurveys(false)
                 }
             }
 
         })
-
     }
 
-    fun loadSurveys(){
+    fun loadSurveys(showProgress:Boolean){
         surveys.clear()
-        val token = SharedPrefUtility.getInstance(SurveyActivity.this).auth.accessToken;
+        val token = SharedPrefUtility.getInstance(this@SurveyActivity).auth.accessToken
+        if(showProgress){
+            showProgress()
+        }
         ApiUtils.getAPIService(this).getSurveys(SurveyRequest(token)).enqueue(object: Callback<List<Survey>> {
             override fun onFailure(call: Call<List<Survey>>, t: Throwable) {
-                DialogUtils.showToast(SurveyActivity.this, getString(R.string.general_error))
+                hideProgres()
+                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
             }
 
             override fun onResponse(call: Call<List<Survey>>, response: Response<List<Survey>>) {
+                hideProgres()
                 if(response.body() != null){
-                    SharedPrefUtility.getInstance(SurveyActivity.this).updateAuth(response.body())
-                    loadSurveys()
+                    updateViewPager(response.body()!!)
+                } else {
+                    DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
                 }
             }
         })
-        updateViewPager()
+
     }
 
-    fun updateViewPager(){
+    fun updateViewPager(newSurveys:List<Survey>){
+        surveys.addAll(newSurveys)
         adapter.notifyDataSetChanged()
     }
 
@@ -119,13 +129,27 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_refresh -> {
-                loadSurveys()
+                reloadSurveys()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
 
+    fun reloadSurveys(){
+        if(surveys.size >0) {
+            surveys.clear()
+            adapter.notifyDataSetChanged()
+        }
+
+        val auth = SharedPrefUtility.getInstance(this@SurveyActivity).auth
+        if(auth != null && !TextUtils.isEmpty(auth.accessToken)){
+            loadSurveys(true)
+        } else {
+            getAccessToken()
+        }
+
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -151,5 +175,13 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun showProgress(){
+        progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgres(){
+        progressBar.visibility = View.GONE
     }
 }

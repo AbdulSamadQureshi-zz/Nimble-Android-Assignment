@@ -1,9 +1,5 @@
 package echo.com.surveys.rest;
 
-/**
- * Created by ibraheem on 10/06/2017.
- */
-
 import android.content.Context;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
