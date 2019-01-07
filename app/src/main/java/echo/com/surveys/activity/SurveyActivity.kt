@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
@@ -34,7 +35,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     var lastSelectedPosition = 0
 
     var surveys: ArrayList<Survey> = ArrayList()
-    var indexes: ArrayList<Boolean> = ArrayList()
+    var indexes: ArrayList<Survey> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_survey_activity)
@@ -70,8 +71,8 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             }
 
             override fun onPageSelected(p0: Int) {
-                indexes[lastSelectedPosition] = false
-                indexes[p0] = true
+                indexes.get(lastSelectedPosition).isSelected= false
+                indexes.get(p0).isSelected= true
                 lastSelectedPosition = p0
                 indexAdapter.notifyDataSetChanged()
             }
@@ -79,8 +80,10 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun initIndexAdapter() {
+        recyclerView.layoutManager = LinearLayoutManager(this@SurveyActivity, LinearLayoutManager.VERTICAL, false)
         indexAdapter = IndexAdapter(indexes)
-        recyclerView.adapter = indexAdapter;
+        recyclerView.adapter = indexAdapter
+
     }
 
 
@@ -105,7 +108,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     }
 
     fun loadSurveys(showProgress: Boolean) {
-        surveys.clear()
         val token = SharedPrefUtility.getInstance(this@SurveyActivity).auth.accessToken
         if (showProgress) {
             showProgress()
@@ -119,13 +121,10 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             override fun onResponse(call: Call<List<Survey>>, response: Response<List<Survey>>) {
                 hideProgres()
                 if (response.body() != null) {
-                    var indexes = ArrayList<Boolean>()
-                    var iterator = response.body()!!.iterator()
-                    while(iterator.hasNext()){
-                        indexes.add(false)
-                        iterator.next()
+                    if(surveys.size == 0 && response.body()!!.isNotEmpty()){
+                        response.body()!![0].isSelected = true
                     }
-                    updateIndexRecyclerView(indexes)
+                    updateIndexRecyclerView(response.body()!!)
                     updateViewPager(response.body()!!)
                 } else {
                     DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
@@ -140,8 +139,8 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         pagerAdapter.notifyDataSetChanged()
     }
 
-    fun updateIndexRecyclerView(newIndexes: List<Boolean>) {
-        indexes.addAll(newIndexes)
+    fun updateIndexRecyclerView(newIndixes: List<Survey>) {
+        indexes.addAll(newIndixes)
         indexAdapter.notifyDataSetChanged()
     }
 

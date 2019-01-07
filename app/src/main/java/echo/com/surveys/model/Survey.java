@@ -12,6 +12,7 @@ public class Survey implements Parcelable {
     private String url;
     private String title;
     private String description;
+    private boolean isSelected; // for index adapter
 
     public String getHDUrl() {
         return url+"l";
@@ -42,6 +43,14 @@ public class Survey implements Parcelable {
         this.description = description;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     public Survey() {
     }
 
@@ -61,12 +70,14 @@ public class Survey implements Parcelable {
         dest.writeString(this.url);
         dest.writeString(this.title);
         dest.writeString(this.description);
+        dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
     }
 
     protected Survey(Parcel in) {
         this.url = in.readString();
         this.title = in.readString();
         this.description = in.readString();
+        this.isSelected = in.readByte() != 0;
     }
 
     public static final Creator<Survey> CREATOR = new Creator<Survey>() {

@@ -6,14 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import echo.com.surveys.R;
+import echo.com.surveys.model.Survey;
 
 import java.util.ArrayList;
 
 public class IndexAdapter extends RecyclerView.Adapter {
 
-    ArrayList<Boolean> indexList;
+    ArrayList<Survey> indexList;
 
-    public IndexAdapter(ArrayList<Boolean> indexList) {
+    public IndexAdapter(ArrayList<Survey> indexList) {
         this.indexList = indexList;
     }
 
@@ -44,14 +45,12 @@ public class IndexAdapter extends RecyclerView.Adapter {
 
         public IndexViewHolder(final View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.indexer);
+            imageView = itemView.findViewById(R.id.indexer);
         }
-        public void bindData(final Boolean isSelected) {
-            imageView.setImageResource(isSelected? R.drawable.shape_circle_filled: R.drawable.shape_circle_empty);
+
+        public void bindData(Survey survey) {
+            imageView.setImageResource(survey.isSelected() ? R.drawable.shape_circle_filled : R.drawable.shape_circle_empty);
         }
     }
-
-
-
-    }
+}
 
