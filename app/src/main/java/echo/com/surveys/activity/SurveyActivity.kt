@@ -38,7 +38,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     lateinit var pagerAdapter: SurveyFragmentPagerAdapter
     lateinit var indexAdapter: IndexAdapter
     var lastSelectedPosition = 0
-    val PAGE_SIZE = 10
+    val PAGE_SIZE = 5
     var currentPage = 1
 
     var surveys: ArrayList<Survey> = ArrayList()
