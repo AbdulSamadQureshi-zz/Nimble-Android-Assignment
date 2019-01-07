@@ -49,7 +49,7 @@ public class SurveyFragment extends BaseFragment {
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
         binding.setSurvey(survey);
-        ImageUtil.loadResizedImage(getActivity(), binding.image, survey.getUrl(), (int)dpWidth, (int)dpHeight);
+        ImageUtil.loadResizedImage(getActivity(), binding.image, survey.getHDUrl(), (int)dpWidth, (int)dpHeight);
     }
 
     @Override

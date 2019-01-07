@@ -2,14 +2,21 @@ package echo.com.surveys.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Survey implements Parcelable {
 
-
-
+    @SerializedName("cover_image_url")
+    @Expose
     private String url;
     private String title;
     private String description;
+
+    public String getHDUrl() {
+        return url+"l";
+    }
+
 
     public String getUrl() {
         return url;
@@ -35,6 +42,15 @@ public class Survey implements Parcelable {
         this.description = description;
     }
 
+    public Survey() {
+    }
+
+    public Survey(String url, String title, String description) {
+        this.url = url;
+        this.title = title;
+        this.description = description;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -45,15 +61,6 @@ public class Survey implements Parcelable {
         dest.writeString(this.url);
         dest.writeString(this.title);
         dest.writeString(this.description);
-    }
-
-    public Survey() {
-    }
-
-    public Survey(String url, String title, String description) {
-        this.url = url;
-        this.title = title;
-        this.description = description;
     }
 
     protected Survey(Parcel in) {

@@ -38,6 +38,7 @@ public class ApiClient {
                     .writeTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
                     .addInterceptor(logging)
+                    .authenticator(new TokenAuthenticator())
                     .build();
 
 

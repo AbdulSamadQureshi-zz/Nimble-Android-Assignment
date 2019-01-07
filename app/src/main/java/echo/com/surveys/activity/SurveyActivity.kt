@@ -9,11 +9,20 @@ import android.view.Menu
 import android.view.MenuItem
 import echo.com.surveys.R
 import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
+import echo.com.surveys.model.Auth
+import echo.com.surveys.model.AuthRequest
 import echo.com.surveys.model.Survey
+import echo.com.surveys.model.SurveyRequest
+import echo.com.surveys.rest.ApiUtils
+import echo.com.surveys.util.Constants
+import echo.com.surveys.util.DialogUtils
+import echo.com.surveys.util.SharedPrefUtility
 import kotlinx.android.synthetic.main.app_bar_survey.*
 import kotlinx.android.synthetic.main.content_survey.*
 import kotlinx.android.synthetic.main.layout_survey_activity.*
-
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -50,14 +59,38 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     }
 
 
+    fun getAccessToken(){
+        val authRequest = AuthRequest()
+        ApiUtils.getAPIService(this).getToken(authRequest).enqueue(object: Callback<Auth>{
+            override fun onFailure(call: Call<Auth>, t: Throwable) {
+                DialogUtils.showToast(SurveyActivity.this, getString(R.string.general_error))            }
+
+            override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
+                if(response.body() != null){
+                    SharedPrefUtility.getInstance(SurveyActivity.this).updateAuth(response.body())
+                    loadSurveys()
+                }
+            }
+
+        })
+
+    }
+
     fun loadSurveys(){
         surveys.clear()
-        val survey1 = Survey("https://homepages.cae.wisc.edu/~ece533/images/airplane.png","Title1","Description1")
-        val survey2 = Survey("https://homepages.cae.wisc.edu/~ece533/images/arctichare.png","Title2","Description2")
-        val survey3 = Survey("https://homepages.cae.wisc.edu/~ece533/images/baboon.png","Title3","Description3")
-        surveys.add(survey1)
-        surveys.add(survey2)
-        surveys.add(survey3)
+        val token = SharedPrefUtility.getInstance(SurveyActivity.this).auth.accessToken;
+        ApiUtils.getAPIService(this).getSurveys(SurveyRequest(token)).enqueue(object: Callback<List<Survey>> {
+            override fun onFailure(call: Call<List<Survey>>, t: Throwable) {
+                DialogUtils.showToast(SurveyActivity.this, getString(R.string.general_error))
+            }
+
+            override fun onResponse(call: Call<List<Survey>>, response: Response<List<Survey>>) {
+                if(response.body() != null){
+                    SharedPrefUtility.getInstance(SurveyActivity.this).updateAuth(response.body())
+                    loadSurveys()
+                }
+            }
+        })
         updateViewPager()
     }
 
