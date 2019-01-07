@@ -12,10 +12,9 @@ import java.util.List;
 
 public interface ApiInterface {
 
-
-    @POST("/surveys.json")
+    @POST("surveys.json")
     Call<List<Survey>> getSurveys(@Body SurveyRequest surveyRequest);
 
-    @POST("/oauth/token")
+    @POST("oauth/token")
     Call<Auth> getToken(@Body AuthRequest authRequest);
 }
