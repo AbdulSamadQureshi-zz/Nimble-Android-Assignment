@@ -63,7 +63,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     private fun initPagerAdapter() {
         pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveys)
         viewPager.adapter = pagerAdapter
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
             }
 
@@ -76,7 +76,22 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
                 lastSelectedPosition = p0
                 indexAdapter.notifyDataSetChanged()
             }
+
         })
+//        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+//            override fun onPageScrollStateChanged(p0: Int) {
+//            }
+//
+//            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+//            }
+//
+//            override fun onPageSelected(p0: Int) {
+//                indexes.get(lastSelectedPosition).isSelected= false
+//                indexes.get(p0).isSelected= true
+//                lastSelectedPosition = p0
+//                indexAdapter.notifyDataSetChanged()
+//            }
+//        })
     }
 
     private fun initIndexAdapter() {
@@ -165,6 +180,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_refresh -> {
+                viewPager.setCurrentItem(0, false)
                 reloadSurveys()
                 return true
             }

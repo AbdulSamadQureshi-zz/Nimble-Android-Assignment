@@ -22,13 +22,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/adapter/IndexAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/adapter/IndexAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/model/Survey.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/model/Survey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/view/VerticalViewPager.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_survey.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_survey.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_item_indexer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_item_indexer.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,72 +54,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SurveyActivity.kt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SurveyActivity.kt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="109" column="44" lean-forward="true" selection-start-line="109" selection-start-column="44" selection-end-line="109" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Collections.kt" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.11/e49742d3259938ea3539346c8ca3babb54a5140f/kotlin-stdlib-common-1.3.11-sources.jar!/kotlin/collections/Collections.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="169" column="36" selection-start-line="169" selection-start-column="36" selection-end-line="169" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="layout_item_indexer.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_item_indexer.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
+            <state relative-caret-position="216">
+              <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
               <folding>
-                <element signature="e#710#738#0" expanded="true" />
+                <element signature="e#1889#1920#1" expanded="true" />
+                <element signature="e#1934#1966#1" expanded="true" />
+                <element signature="e#4054#4087#1" expanded="true" />
+                <element signature="e#4913#4946#1" expanded="true" />
+                <element signature="e#5506#5539#1" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="content_survey.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="content_survey.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_survey.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
-              <folding>
-                <element signature="e#383#423#0" expanded="true" />
-                <element signature="e#1928#1950#0" expanded="true" />
-                <element signature="e#2037#2055#0" expanded="true" />
-                <element signature="e#2096#2114#0" expanded="true" />
-                <element signature="e#2152#2170#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IndexAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/echo/com/surveys/adapter/IndexAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#466#467#0" expanded="true" />
-                <element signature="e#508#509#0" expanded="true" />
-                <element signature="e#821#822#0" expanded="true" />
-                <element signature="e#889#890#0" expanded="true" />
-                <element signature="e#774#775#0" expanded="true" />
-                <element signature="e#810#811#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="308">
+              <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -135,8 +93,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loadsu</find>
-      <find>surveys</find>
       <find>progre</find>
       <find>inflate</find>
       <find>Inflate</find>
@@ -165,6 +121,8 @@
       <find>linearlayou</find>
       <find>reload</find>
       <find>onr</find>
+      <find>refresh</find>
+      <find>&lt;progress</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2631,8 +2589,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/fragment/BaseFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/adapter/SurveyFragmentPagerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/view/VerticalViewPager.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/SurveyApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/model/Auth.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/util/SharedPrefsHelper.java" />
@@ -2654,10 +2610,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_circle_filled.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/model/Survey.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/adapter/IndexAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_survey.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_item_indexer.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_survey.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/view/VerticalViewPager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt" />
       </list>
     </option>
   </component>
@@ -2786,68 +2744,6 @@
               <item name="surveys" type="462c0819:PsiDirectoryNode" />
               <item name="fragment" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Surveys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Surveys" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="echo" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="surveys" type="462c0819:PsiDirectoryNode" />
-              <item name="rest" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Surveys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Surveys" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="echo" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="surveys" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Surveys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Surveys" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="echo" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="surveys" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Surveys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Surveys" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Surveys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Surveys" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="drawable" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Surveys" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Surveys" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="layout" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -2859,7 +2755,7 @@
     <property name="DEBUGGABLE_PROCESS" value="echo.com.surveys" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="item_in&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_item_indexer.xml&#10;item&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_item_indexer.xml&#10;conten&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/content_survey.xml&#10;content_l&#9;null&#9;null&#10;surveyac&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt&#10;survey_fr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_survey_fragment.xml&#10;surve&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/fragment/SurveyFragment.java&#10;interc&#9;PSI&#9;JAVA://com.sun.xml.internal.bind.v2.runtime.unmarshaller.Intercepter&#10;apiin&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/ApiInterface.java&#10;cons&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/util/Constants.java&#10;api&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/ApiUtils.java&#10;authen&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/TokenAuthenticator.java&#10;androidman&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/AndroidManifest.xml&#10;Surveyfr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/fragment/SurveyFragment.java&#10;Fra&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/adapter/SurveyFragmentPagerAdapter.java&#10;Surve&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/model/Survey.java&#10;Sharepr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/util/SharedPrefsHelper.java&#10;android&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/AndroidManifest.xml&#10;apiu&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/ApiUtils.java&#10;build.g&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/build.gradle&#10;build&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/build.gradle&#10;layout_su&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_survey_fragment.xml&#10;color&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/colors.xml&#10;STYLES.X&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values-v21/styles.xml&#10;strings&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/strings.xml&#10;colors&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/colors.xml&#10;build.gra&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/build.gradle&#10;build.gr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/build.gradle&#10;colors.&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/colors.xml" />
+    <property name="SearchEverywhereHistoryKey" value="cont&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/content_survey.xml&#10;verti&#9;FILE&#9;jar:///Users/abdulsamad/.gradle/caches/modules-2/files-2.1/com.github.castorflex.verticalviewpager/library/19.0.1/6e2fffb976cbdac3f791eb34469d9fc7edfcf094/library-19.0.1-sources.jar!/fr/castorflex/android/verticalviewpager/VerticalViewPager.java&#10;build.g&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/build.gradle&#10;item_in&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_item_indexer.xml&#10;item&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_item_indexer.xml&#10;conten&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/content_survey.xml&#10;content_l&#9;null&#9;null&#10;surveyac&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt&#10;survey_fr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_survey_fragment.xml&#10;surve&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/fragment/SurveyFragment.java&#10;interc&#9;PSI&#9;JAVA://com.sun.xml.internal.bind.v2.runtime.unmarshaller.Intercepter&#10;apiin&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/ApiInterface.java&#10;cons&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/util/Constants.java&#10;api&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/ApiUtils.java&#10;authen&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/TokenAuthenticator.java&#10;androidman&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/AndroidManifest.xml&#10;Surveyfr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/fragment/SurveyFragment.java&#10;Fra&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/adapter/SurveyFragmentPagerAdapter.java&#10;Surve&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/model/Survey.java&#10;Sharepr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/util/SharedPrefsHelper.java&#10;android&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/AndroidManifest.xml&#10;apiu&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/java/echo/com/surveys/rest/ApiUtils.java&#10;build&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/build.gradle&#10;layout_su&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/layout/layout_survey_fragment.xml&#10;color&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/colors.xml&#10;STYLES.X&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values-v21/styles.xml&#10;strings&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/strings.xml&#10;colors&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/colors.xml&#10;build.gra&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/build.gradle&#10;build.gr&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/build.gradle&#10;colors.&#9;FILE&#9;file:///Users/abdulsamad/Downloads/Surveys/app/src/main/res/values/colors.xml" />
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/Documents/android-sdk" />
@@ -3054,12 +2950,12 @@
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="right" id="Preview" order="3" weight="0.31430936" />
+      <window_info active="true" anchor="right" id="Preview" order="3" visible="true" weight="0.31430936" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49793217" weight="0.3289256" />
       <window_info id="Captures" order="2" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25444266" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25392887" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289256" />
       <window_info anchor="right" id="Gradle" order="3" />
       <window_info anchor="right" id="Fabric" order="3" />
@@ -3137,7 +3033,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt</url>
-          <line>137</line>
+          <line>152</line>
           <properties />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
@@ -3146,23 +3042,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/75c19566ece57d6d18f63fa09f832ce0/jars/classes.jar!/android/support/v7/app/AppCompatActivity.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/survey.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="34" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/layout_survey_activity_drawer.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -3201,24 +3080,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/d518a67a9f6ca78e79ee94a1fa51348f/jars/classes.jar!/android/support/v4/view/ViewPager.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="61" column="54" lean-forward="true" selection-start-line="61" selection-start-column="54" selection-end-line="61" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="44" column="64" lean-forward="true" selection-start-line="44" selection-start-column="64" selection-end-line="44" selection-end-column="64" />
         </state>
       </provider>
     </entry>
@@ -3384,13 +3249,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/echo/com/surveys/view/VerticalViewPager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -3563,34 +3421,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.11/e49742d3259938ea3539346c8ca3babb54a5140f/kotlin-stdlib-common-1.3.11-sources.jar!/kotlin/collections/Collections.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="169" column="36" selection-start-line="169" selection-start-column="36" selection-end-line="169" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_survey.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
-          <folding>
-            <element signature="e#383#423#0" expanded="true" />
-            <element signature="e#1928#1950#0" expanded="true" />
-            <element signature="e#2037#2055#0" expanded="true" />
-            <element signature="e#2096#2114#0" expanded="true" />
-            <element signature="e#2152#2170#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3607,10 +3441,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.11/e49742d3259938ea3539346c8ca3babb54a5140f/kotlin-stdlib-common-1.3.11-sources.jar!/kotlin/collections/Collections.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="169" column="36" selection-start-line="169" selection-start-column="36" selection-end-line="169" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="41" column="55" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/d518a67a9f6ca78e79ee94a1fa51348f/jars/classes.jar!/android/support/v4/view/ViewPager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="54" column="42" lean-forward="true" selection-start-line="54" selection-start-column="42" selection-end-line="54" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/android-sdk/sources/android-28/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="3286" column="28" selection-start-line="3286" selection-start-column="28" selection-end-line="3286" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/echo/com/surveys/view/VerticalViewPager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1098">
+          <caret line="67" column="42" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="42" />
+          <folding>
+            <element signature="e#528#529#0" expanded="true" />
+            <element signature="e#556#557#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#688#689#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.castorflex.verticalviewpager/library/19.0.1/6e2fffb976cbdac3f791eb34469d9fc7edfcf094/library-19.0.1-sources.jar!/fr/castorflex/android/verticalviewpager/VerticalViewPager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="49" lean-forward="true" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+          <folding>
+            <element signature="e#17074#17075#0" expanded="true" />
+            <element signature="e#17122#17123#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/echo/com/surveys/activity/SurveyActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="109" column="44" lean-forward="true" selection-start-line="109" selection-start-column="44" selection-end-line="109" selection-end-column="44" />
+        <state relative-caret-position="216">
+          <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+          <folding>
+            <element signature="e#1889#1920#1" expanded="true" />
+            <element signature="e#1934#1966#1" expanded="true" />
+            <element signature="e#4054#4087#1" expanded="true" />
+            <element signature="e#4913#4946#1" expanded="true" />
+            <element signature="e#5506#5539#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_survey.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
         </state>
       </provider>
     </entry>

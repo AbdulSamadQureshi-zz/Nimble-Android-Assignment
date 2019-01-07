@@ -19,13 +19,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
+            android:background="@color/white"
+            android:indeterminateTintMode="src_in"
             android:indeterminateTint="@color/colorPrimary"/>
-    <echo.com.surveys.view.VerticalViewPager
+
+    <fr.castorflex.android.verticalviewpager.VerticalViewPager
             android:id="@+id/viewPager"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+    <!--<echo.com.surveys.view.VerticalViewPager-->
+            <!--android:id="@+id/viewPager"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
 
     <View
             android:id="@+id/anchor"
