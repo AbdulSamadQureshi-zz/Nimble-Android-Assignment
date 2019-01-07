@@ -11,7 +11,9 @@ import java.util.List;
 public interface ApiInterface {
 
     @GET("/surveys.json")
-    Call<List<Survey>> getSurveys(@Query("access_token") String token);
+    Call<List<Survey>> getSurveys(@Query("access_token") String token,
+                                  @Query("page") Integer page,
+                                  @Query("per_page") Integer perPage);
 
     @POST("/oauth/token")
     Call<Auth> getToken(@Body AuthRequest authRequest);

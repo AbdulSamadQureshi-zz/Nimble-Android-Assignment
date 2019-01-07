@@ -13,8 +13,7 @@ public class SurveyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        component = DaggerDIComponent.builder()
-                .appModule(new DIModule(getApplicationContext()))
+        component = DaggerDIComponent.builder().dIModule(new DIModule(getApplicationContext()))
                 .build();
     }
     public static SurveyApplication getInstance() {

@@ -21,6 +21,7 @@ import echo.com.surveys.model.Survey
 import echo.com.surveys.rest.ApiUtils
 import echo.com.surveys.util.DialogUtils
 import echo.com.surveys.util.SharedPrefUtility
+import echo.com.surveys.view.CustomViewPager
 import kotlinx.android.synthetic.main.app_bar_survey.*
 import kotlinx.android.synthetic.main.content_survey.*
 import kotlinx.android.synthetic.main.layout_survey_activity.*
@@ -37,6 +38,8 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     lateinit var pagerAdapter: SurveyFragmentPagerAdapter
     lateinit var indexAdapter: IndexAdapter
     var lastSelectedPosition = 0
+    val PAGE_SIZE = 5
+    var currentPage = 1
 
     var surveys: ArrayList<Survey> = ArrayList()
     var indexes: ArrayList<Survey> = ArrayList()
@@ -70,6 +73,18 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     private fun initPagerAdapter() {
         pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveys)
         viewPager.adapter = pagerAdapter
+        viewPager.setOnSwipeOutListener(object: CustomViewPager.OnSwipeOutListener {
+            override fun onSwipeOutAtEnd() {
+                currentPage++
+                loadSurveys(true)
+//                Toast.makeText(this@SurveyActivity,"End",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onSwipeOutAtStart() {
+                reloadData()
+//                Toast.makeText(this@SurveyActivity,"Start",Toast.LENGTH_SHORT).show()
+            }
+        })
         viewPager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
             }
@@ -77,28 +92,17 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
             }
 
-            override fun onPageSelected(p0: Int) {
+            override fun onPageSelected(position: Int) {
+                if(indexes.size == 0){
+                    return
+                }
                 indexes.get(lastSelectedPosition).isSelected= false
-                indexes.get(p0).isSelected= true
-                lastSelectedPosition = p0
+                indexes.get(position).isSelected= true
+                lastSelectedPosition = position
                 indexAdapter.notifyDataSetChanged()
             }
 
         })
-//        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-//            override fun onPageScrollStateChanged(p0: Int) {
-//            }
-//
-//            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
-//            }
-//
-//            override fun onPageSelected(p0: Int) {
-//                indexes.get(lastSelectedPosition).isSelected= false
-//                indexes.get(p0).isSelected= true
-//                lastSelectedPosition = p0
-//                indexAdapter.notifyDataSetChanged()
-//            }
-//        })
     }
 
     private fun initIndexAdapter() {
@@ -134,7 +138,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         if (showProgress) {
             showProgress()
         }
-        ApiUtils.getAPIService(this).getSurveys(token).enqueue(object : Callback<List<Survey>> {
+        ApiUtils.getAPIService(this).getSurveys(token,currentPage,PAGE_SIZE).enqueue(object : Callback<List<Survey>> {
             override fun onFailure(call: Call<List<Survey>>, t: Throwable) {
                 hideProgres()
                 DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
@@ -149,7 +153,11 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
                     updateIndexRecyclerView(response.body()!!)
                     updateViewPager(response.body()!!)
                 } else {
-                    DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                    if(response.code() == 200){
+                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.no_more_surveys))
+                    } else {
+                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                    }
                 }
             }
         })
@@ -187,14 +195,18 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_refresh -> {
-                viewPager.setCurrentItem(0, false)
-                reloadSurveys()
+                reloadData()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
 
+    fun reloadData(){
+        currentPage= 1
+        viewPager.setCurrentItem(0, false)
+        reloadSurveys()
+    }
     fun reloadIndexes() {
         indexes.clear()
         indexAdapter.notifyDataSetChanged()
