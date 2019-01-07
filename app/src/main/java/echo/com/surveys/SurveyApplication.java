@@ -1,17 +1,26 @@
 package echo.com.surveys;
 
 import android.app.Application;
-import android.content.Context;
+import echo.com.surveys.dependencyInjection.DIModule;
+import echo.com.surveys.dependencyInjection.DIComponent;
+import echo.com.surveys.dependencyInjection.DaggerDIComponent;
 
 public class SurveyApplication extends Application {
 
-    private static Context context;
-    public static Context getContext(){
-        return context;
-    }
+    private static SurveyApplication instance;
+    private DIComponent component;
     @Override
     public void onCreate() {
         super.onCreate();
-        context = this;
+        instance = this;
+        component = DaggerDIComponent.builder()
+                .appModule(new DIModule(getApplicationContext()))
+                .build();
+    }
+    public static SurveyApplication getInstance() {
+        return instance;
+    }
+    public DIComponent component() {
+        return component;
     }
 }
