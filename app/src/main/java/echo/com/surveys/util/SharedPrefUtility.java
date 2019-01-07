@@ -1,34 +1,21 @@
 package echo.com.surveys.util;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import com.google.gson.Gson;
-import echo.com.surveys.SurveyApplication;
 import echo.com.surveys.model.Auth;
+
+
 
 public class SharedPrefUtility {
 
     private SharedPreferences sharedPreferences;
-    private static SharedPrefUtility utility;
 
-    private SharedPrefUtility(Context context) {
-        if (sharedPreferences == null) {
-            sharedPreferences = (context).getSharedPreferences(
-                    Constants.PREF_NAME, Context.MODE_PRIVATE);
-        }
+    public SharedPrefUtility(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
+
     }
 
-    public static synchronized SharedPrefUtility getInstance(Context c) {
-        if (utility == null) {
-            utility = new SharedPrefUtility(c);
-        }
-        return utility;
-    }
-
-    public SharedPreferences getPreferences() {
-        return sharedPreferences;
-    }
 
     public void savePrefrences(String key, String value) {
         if (sharedPreferences != null) {
@@ -58,7 +45,7 @@ public class SharedPrefUtility {
         if (sharedPreferences != null) {
             Gson gson = new Gson();
             String objectJson = gson.toJson(object);
-            SharedPrefUtility.getInstance(SurveyApplication.getContext()).savePrefrences(key, objectJson);
+            savePrefrences(key, objectJson);
         }
     }
 

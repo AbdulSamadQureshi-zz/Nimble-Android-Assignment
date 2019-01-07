@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import echo.com.surveys.R
+import echo.com.surveys.SurveyApplication
 import echo.com.surveys.adapter.IndexAdapter
 import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
 import echo.com.surveys.model.Auth
@@ -26,6 +27,9 @@ import kotlinx.android.synthetic.main.layout_survey_activity.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
+
+
 
 
 class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -36,10 +40,13 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     var surveys: ArrayList<Survey> = ArrayList()
     var indexes: ArrayList<Survey> = ArrayList()
+    @Inject
+    lateinit var sharedPrefUtility: SharedPrefUtility
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_survey_activity)
         setSupportActionBar(toolbar)
+        SurveyApplication.app().basicComponent().inject(this)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -114,7 +121,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
                 hideProgres()
                 if (response.body() != null) {
-                    SharedPrefUtility.getInstance(this@SurveyActivity).updateAuth(response.body())
+                    sharedPrefUtility?.updateAuth(response.body())
                     loadSurveys(false)
                 }
             }
@@ -123,7 +130,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     }
 
     fun loadSurveys(showProgress: Boolean) {
-        val token = SharedPrefUtility.getInstance(this@SurveyActivity).auth.accessToken
+        val token = sharedPrefUtility?.auth?.accessToken
         if (showProgress) {
             showProgress()
         }
@@ -200,7 +207,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             reloadIndexes()
         }
 
-        val auth = SharedPrefUtility.getInstance(this@SurveyActivity).auth
+        val auth = sharedPrefUtility?.auth
         if (auth != null && !TextUtils.isEmpty(auth.accessToken)) {
             loadSurveys(true)
         } else {

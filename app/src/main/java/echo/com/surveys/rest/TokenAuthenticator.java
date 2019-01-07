@@ -4,8 +4,6 @@ import android.text.TextUtils;
 import echo.com.surveys.SurveyApplication;
 import echo.com.surveys.model.Auth;
 import echo.com.surveys.model.AuthRequest;
-import echo.com.surveys.util.Constants;
-import echo.com.surveys.util.SharedPrefUtility;
 import okhttp3.Authenticator;
 import okhttp3.Request;
 import okhttp3.Route;
@@ -34,8 +32,9 @@ public class TokenAuthenticator implements Authenticator {
     }
 
     private String updateRefreshToken(Auth auth){
-        SharedPrefUtility.getInstance(SurveyApplication.getContext()).savePrefrences(Constants.Keys.AUTH, auth);
-        return auth.getAccessToken();
+//        SharedPrefUtility.getInstance(SurveyApplication.getContext()).savePrefrences(Constants.Keys.AUTH, auth);
+//        return auth.getAccessToken();
+        return "";
     }
 
 
