@@ -4,6 +4,7 @@ package echo.com.surveys.dependencyInjection;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.google.gson.Gson;
 import dagger.Module;
 import dagger.Provides;
 import echo.com.surveys.util.SharedPrefUtility;
@@ -30,8 +31,13 @@ public class AppModule {
     }
 
     @Singleton @Provides
-    public SharedPrefUtility provideObjectManager(SharedPreferences sharedPreferences){
-        return new SharedPrefUtility(sharedPreferences);
+    public Gson provideGson(){
+        return new Gson();
+    }
+
+    @Singleton @Provides
+    public SharedPrefUtility provideObjectManager(SharedPreferences sharedPreferences, Gson gson){
+        return new SharedPrefUtility(sharedPreferences, gson);
     }
 
 }

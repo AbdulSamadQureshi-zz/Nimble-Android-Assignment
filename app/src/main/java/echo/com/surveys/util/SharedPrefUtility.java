@@ -10,10 +10,11 @@ import echo.com.surveys.model.Auth;
 public class SharedPrefUtility {
 
     private SharedPreferences sharedPreferences;
+    private Gson gson;
 
-    public SharedPrefUtility(SharedPreferences sharedPreferences) {
+    public SharedPrefUtility(SharedPreferences sharedPreferences, Gson gson) {
         this.sharedPreferences = sharedPreferences;
-
+        this.gson = gson;
     }
 
 
@@ -43,7 +44,6 @@ public class SharedPrefUtility {
 
     public void savePrefrences(String key, Object object) {
         if (sharedPreferences != null) {
-            Gson gson = new Gson();
             String objectJson = gson.toJson(object);
             savePrefrences(key, objectJson);
         }
@@ -68,7 +68,6 @@ public class SharedPrefUtility {
 
 
     public void updateAuth(Auth auth) {
-        Gson gson = new Gson();
         String authJson = gson.toJson(auth);
         //        TODO encript the json
         savePrefrences(Constants.Keys.AUTH, authJson);
@@ -76,7 +75,6 @@ public class SharedPrefUtility {
 
 
     public Auth getAuth() {
-        Gson gson = new Gson();
         String json = getStringValue(Constants.Keys.AUTH);
         if (!TextUtils.isEmpty(json)) {
             return gson.fromJson(json, Auth.class);

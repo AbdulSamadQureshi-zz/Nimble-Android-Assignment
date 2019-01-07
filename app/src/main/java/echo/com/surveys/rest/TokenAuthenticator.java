@@ -4,16 +4,20 @@ import android.text.TextUtils;
 import echo.com.surveys.SurveyApplication;
 import echo.com.surveys.model.Auth;
 import echo.com.surveys.model.AuthRequest;
+import echo.com.surveys.util.Constants;
+import echo.com.surveys.util.SharedPrefUtility;
 import okhttp3.Authenticator;
 import okhttp3.Request;
 import okhttp3.Route;
 import retrofit2.Response;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 public class TokenAuthenticator implements Authenticator {
 
-
+    @Inject
+    SharedPrefUtility sharedPrefUtility;
     @Override
     public Request authenticate(Route route, okhttp3.Response response) throws IOException {
         if (response.code() == 400 &&  response.body()!= null && TextUtils.isEmpty(response.body().toString())) {
@@ -32,9 +36,8 @@ public class TokenAuthenticator implements Authenticator {
     }
 
     private String updateRefreshToken(Auth auth){
-//        SharedPrefUtility.getInstance(SurveyApplication.getContext()).savePrefrences(Constants.Keys.AUTH, auth);
-//        return auth.getAccessToken();
-        return "";
+        sharedPrefUtility.savePrefrences(Constants.Keys.AUTH, auth);
+        return auth.getAccessToken();
     }
 
 
