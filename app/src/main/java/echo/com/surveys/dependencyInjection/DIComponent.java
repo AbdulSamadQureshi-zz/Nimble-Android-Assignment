@@ -6,7 +6,7 @@ import echo.com.surveys.activity.SurveyActivity;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = {AppModule.class})
-public interface BasicComponent {
+@Component(modules = {DIModule.class})
+public interface DIComponent {
     void inject(SurveyActivity activity);
 }

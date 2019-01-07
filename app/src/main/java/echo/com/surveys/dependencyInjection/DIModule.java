@@ -12,10 +12,10 @@ import echo.com.surveys.util.SharedPrefUtility;
 import javax.inject.Singleton;
 
 @Module
-public class AppModule {
+public class DIModule {
     private Context context;
 
-    public AppModule(Context context) {
+    public DIModule(Context context) {
         this.context = context;
     }
 
@@ -36,7 +36,7 @@ public class AppModule {
     }
 
     @Singleton @Provides
-    public SharedPrefUtility provideObjectManager(SharedPreferences sharedPreferences, Gson gson){
+    public SharedPrefUtility provideSharedPreferenceUtility(SharedPreferences sharedPreferences, Gson gson){
         return new SharedPrefUtility(sharedPreferences, gson);
     }
 

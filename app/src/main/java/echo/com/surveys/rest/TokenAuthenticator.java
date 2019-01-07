@@ -22,7 +22,7 @@ public class TokenAuthenticator implements Authenticator {
     public Request authenticate(Route route, okhttp3.Response response) throws IOException {
         if (response.code() == 400 &&  response.body()!= null && TextUtils.isEmpty(response.body().toString())) {
             //make it as retrofit synchronous call
-            Response<Auth> refreshResponse = ApiUtils.getAPIService(SurveyApplication.getContext()).getToken(new AuthRequest()).execute();
+            Response<Auth> refreshResponse = ApiUtils.getAPIService(SurveyApplication.getInstance()).getToken(new AuthRequest()).execute();
             if (refreshResponse != null && refreshResponse.code() == 200) {
                 String newToken = updateRefreshToken(refreshResponse.body());
                 String oldToken = response.request().url().queryParameter("access_token");

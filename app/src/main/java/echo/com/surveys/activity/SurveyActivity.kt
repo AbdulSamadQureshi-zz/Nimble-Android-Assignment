@@ -46,7 +46,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_survey_activity)
         setSupportActionBar(toolbar)
-        SurveyApplication.app().basicComponent().inject(this)
+        SurveyApplication.getInstance().component().inject(this)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
