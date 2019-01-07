@@ -22,11 +22,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:src="@drawable/placeholder"
-                tools:scaleType="fitXY"
                 android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="match_parent"/>
-
         <View android:layout_width="0dp"
               android:layout_height="match_parent"
               android:background="@color/survey_overlay"/>
@@ -60,7 +58,7 @@
                 android:maxLines="2"
                 android:elevation="2dp"
                 android:text="@{survey.description}"
-                android:layout_marginTop="@dimen/margin_32"
+                android:layout_marginTop="@dimen/margin_16"
                 android:paddingStart="@dimen/survey_title_margin"
                 android:paddingEnd="@dimen/survey_title_margin"
                 android:layout_width="wrap_content"
