@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import echo.com.surveys.R
+import echo.com.surveys.adapter.IndexAdapter
 import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
 import echo.com.surveys.model.Auth
 import echo.com.surveys.model.AuthRequest
@@ -27,8 +29,12 @@ import retrofit2.Response
 
 class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var adapter: SurveyFragmentPagerAdapter
+    lateinit var pagerAdapter: SurveyFragmentPagerAdapter
+    lateinit var indexAdapter: IndexAdapter
+    var lastSelectedPosition = 0
+
     var surveys: ArrayList<Survey> = ArrayList()
+    var indexes: ArrayList<Boolean> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_survey_activity)
@@ -48,20 +54,40 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        initAdapter()
+        initPagerAdapter()
+        initIndexAdapter()
         reloadSurveys()
     }
 
-    private fun initAdapter() {
-        adapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(),surveys)
-        viewPager.adapter = adapter
+    private fun initPagerAdapter() {
+        pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveys)
+        viewPager.adapter = pagerAdapter
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(p0: Int) {
+            }
+
+            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+            }
+
+            override fun onPageSelected(p0: Int) {
+                indexes[lastSelectedPosition] = false
+                indexes[p0] = true
+                lastSelectedPosition = p0
+                indexAdapter.notifyDataSetChanged()
+            }
+        })
+    }
+
+    private fun initIndexAdapter() {
+        indexAdapter = IndexAdapter(indexes)
+        recyclerView.adapter = indexAdapter;
     }
 
 
-    fun getAccessToken(){
+    fun getAccessToken() {
         val authRequest = AuthRequest()
         showProgress()
-        ApiUtils.getAPIService(this).getToken(authRequest).enqueue(object: Callback<Auth> {
+        ApiUtils.getAPIService(this).getToken(authRequest).enqueue(object : Callback<Auth> {
             override fun onFailure(call: Call<Auth>, t: Throwable) {
                 hideProgres()
                 DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
@@ -69,7 +95,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
                 hideProgres()
-                if(response.body() != null){
+                if (response.body() != null) {
                     SharedPrefUtility.getInstance(this@SurveyActivity).updateAuth(response.body())
                     loadSurveys(false)
                 }
@@ -78,13 +104,13 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         })
     }
 
-    fun loadSurveys(showProgress:Boolean){
+    fun loadSurveys(showProgress: Boolean) {
         surveys.clear()
         val token = SharedPrefUtility.getInstance(this@SurveyActivity).auth.accessToken
-        if(showProgress){
+        if (showProgress) {
             showProgress()
         }
-        ApiUtils.getAPIService(this).getSurveys(token).enqueue(object: Callback<List<Survey>> {
+        ApiUtils.getAPIService(this).getSurveys(token).enqueue(object : Callback<List<Survey>> {
             override fun onFailure(call: Call<List<Survey>>, t: Throwable) {
                 hideProgres()
                 DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
@@ -92,7 +118,14 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
             override fun onResponse(call: Call<List<Survey>>, response: Response<List<Survey>>) {
                 hideProgres()
-                if(response.body() != null){
+                if (response.body() != null) {
+                    var indexes = ArrayList<Boolean>()
+                    var iterator = response.body()!!.iterator()
+                    while(iterator.hasNext()){
+                        indexes.add(false)
+                        iterator.next()
+                    }
+                    updateIndexRecyclerView(indexes)
                     updateViewPager(response.body()!!)
                 } else {
                     DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
@@ -102,9 +135,14 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     }
 
-    fun updateViewPager(newSurveys:List<Survey>){
+    fun updateViewPager(newSurveys: List<Survey>) {
         surveys.addAll(newSurveys)
-        adapter.notifyDataSetChanged()
+        pagerAdapter.notifyDataSetChanged()
+    }
+
+    fun updateIndexRecyclerView(newIndexes: List<Boolean>) {
+        indexes.addAll(newIndexes)
+        indexAdapter.notifyDataSetChanged()
     }
 
 
@@ -135,20 +173,26 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-    fun reloadSurveys(){
-        if(surveys.size >0) {
+    fun reloadIndexes() {
+        indexes.clear()
+        indexAdapter.notifyDataSetChanged()
+    }
+
+    fun reloadSurveys() {
+        if (surveys.size > 0) {
             surveys.clear()
-            adapter.notifyDataSetChanged()
+            pagerAdapter.notifyDataSetChanged()
+            reloadIndexes()
         }
 
         val auth = SharedPrefUtility.getInstance(this@SurveyActivity).auth
-        if(auth != null && !TextUtils.isEmpty(auth.accessToken)){
+        if (auth != null && !TextUtils.isEmpty(auth.accessToken)) {
             loadSurveys(true)
         } else {
             getAccessToken()
         }
-
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -176,11 +220,11 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         return true
     }
 
-    fun showProgress(){
+    fun showProgress() {
         progressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgres(){
+    fun hideProgres() {
         progressBar.visibility = View.GONE
     }
 }

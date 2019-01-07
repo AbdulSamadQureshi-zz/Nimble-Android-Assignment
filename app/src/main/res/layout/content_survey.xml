@@ -13,6 +13,7 @@
             tools:visibility="visible"
             android:id="@+id/progressBar"
             android:layout_width="0dp"
+            android:elevation="2dp"
             android:layout_height="wrap_content"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,12 +28,12 @@
             android:layout_height="match_parent"/>
 
     <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="@dimen/indexer_width"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_32"
             android:layout_marginBottom="@dimen/margin_32"
             android:layout_marginEnd="@dimen/margin_16"
             app:layout_constraintEnd_toEndOf="parent"/>
-
 
 </android.support.constraint.ConstraintLayout>
