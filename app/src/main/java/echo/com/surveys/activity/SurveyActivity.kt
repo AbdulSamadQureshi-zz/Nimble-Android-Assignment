@@ -38,7 +38,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     lateinit var pagerAdapter: SurveyFragmentPagerAdapter
     lateinit var indexAdapter: IndexAdapter
     var lastSelectedPosition = 0
-    val PAGE_SIZE = 10
+    val PAGE_SIZE = 5
     var currentPage = 1
 
     var surveys: ArrayList<Survey> = ArrayList()
@@ -153,7 +153,11 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
                     updateIndexRecyclerView(response.body()!!)
                     updateViewPager(response.body()!!)
                 } else {
-                    DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                    if(response.code() == 200){
+                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.no_more_surveys))
+                    } else {
+                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                    }
                 }
             }
         })
