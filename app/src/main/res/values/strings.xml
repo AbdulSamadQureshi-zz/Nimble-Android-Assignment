@@ -10,4 +10,5 @@
     <string name="placeholder_title">Title Goes Here</string>
     <string name="placeholder_description">Description goes here</string>
     <string name="general_error">Something went wrong, please try again later...</string>
+    <string name="no_more_surveys">No more surveys available...</string>
 </resources>

@@ -153,7 +153,11 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
                     updateIndexRecyclerView(response.body()!!)
                     updateViewPager(response.body()!!)
                 } else {
-                    DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                    if(response.code() == 200){
+                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.no_more_surveys))
+                    } else {
+                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                    }
                 }
             }
         })
