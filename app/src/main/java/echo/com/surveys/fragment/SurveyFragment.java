@@ -44,12 +44,12 @@ public class SurveyFragment extends BaseFragment {
     }
 
     protected void initializeResources() {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+//        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+//        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+//        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
         binding.setSurvey(survey);
-        ImageUtil.loadResizedImage(getActivity(), binding.image, survey.getHDUrl(), (int)dpWidth, (int)dpHeight);
+        ImageUtil.loadResizedImage(getActivity(), binding.image, survey.getHDUrl());
     }
 
     @Override
