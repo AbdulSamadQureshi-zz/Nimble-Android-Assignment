@@ -10,27 +10,22 @@ import echo.com.surveys.util.SharedPrefUtility
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 class SurveyRepository{
     val PAGE_SIZE = 5
     var currentPage = 1
 
-    @Inject
-    lateinit var sharedPrefUtility: SharedPrefUtility
 
     fun getSurveys(): LiveData<List<SurveyModel>> {
         return SurveyApplication.database!!.surveyDao().getAllSurveys()
     }
 
-    fun ApiCallAndPutInDB() {
+    fun ApiCallAndPutInDB(token:String) {
 
-//        val token = sharedPrefUtility.auth?.accessToken
-        val token  = "3d716b21569b8dd3364b3864c8ab55293543d65a56dbf9d79eb7b9ca34943adb"
 //        if (showProgress) {
 //            showProgress()
 //        }
-        ApiUtils.getAPIService().getSurveys(token!!,currentPage,PAGE_SIZE).enqueue(object : Callback<List<SurveyModel>> {
+        ApiUtils.getAPIService().getSurveys(token,currentPage,PAGE_SIZE).enqueue(object : Callback<List<SurveyModel>> {
             override fun onFailure(call: Call<List<SurveyModel>>, t: Throwable) {
 //                hideProgres()
 //                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
@@ -62,7 +57,7 @@ class SurveyRepository{
     }
 
 
-    fun getAccessToken() {
+    fun getAccessToken(sharedPrefUtility: SharedPrefUtility) {
         val authRequest = AuthRequest()
 //        showProgress()
         ApiUtils.getAPIService().getToken(authRequest).enqueue(object : Callback<Auth> {
@@ -74,8 +69,8 @@ class SurveyRepository{
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
 //                hideProgres()
                 if (response.body() != null) {
-                    sharedPrefUtility?.updateAuth(response.body())
-                    ApiCallAndPutInDB()
+                    sharedPrefUtility.updateAuth(response.body())
+                    ApiCallAndPutInDB(sharedPrefUtility.auth.accessToken)
                 }
             }
 

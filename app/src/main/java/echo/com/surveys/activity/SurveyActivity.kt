@@ -29,8 +29,6 @@ import kotlinx.android.synthetic.main.layout_survey_activity.*
 import javax.inject.Inject
 
 
-
-
 class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var pagerAdapter: SurveyFragmentPagerAdapter
@@ -40,10 +38,11 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     val PAGE_SIZE = 5
     var currentPage = 1
 
-//    var surveys: ArrayList<Survey> = ArrayList()
+    //    var surveys: ArrayList<Survey> = ArrayList()
 //    var indexes: ArrayList<Survey> = ArrayList()
     @Inject
     lateinit var sharedPrefUtility: SharedPrefUtility
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_survey_activity)
@@ -66,26 +65,33 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         nav_view.setNavigationItemSelectedListener(this)
 
         surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
-        if(isNetworkConnected(this)){
-            surveyViewModel.getSurveysFromApiAndStore()
+        if (isNetworkConnected(this)) {
+            showProgress()
+            if(sharedPrefUtility.auth != null) {
+                surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth.accessToken)
+            } else {
+                surveyViewModel.getAccessToken(sharedPrefUtility)
+            }
+
         } else {
-            Toast.makeText(this,"No Internet found, Showing cache list in the view", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "No Internet found, Showing cache list in the view", Toast.LENGTH_SHORT).show()
         }
 
         surveyViewModel.getAllSurveys().observe(this, Observer<List<SurveyModel>> { surveyList ->
-            Log.e(SurveyActivity::currentPage.javaClass.simpleName,  surveyList.toString())
-
+            Log.e(SurveyActivity::currentPage.javaClass.simpleName, surveyList.toString())
+            hideProgres()
             initPagerAdapter(surveyList)
             initIndexAdapter(surveyList)
         })
-         /*initPagerAdapter(surveyList)
-        initIndexAdapter(surveyList)*/
+        /*initPagerAdapter(surveyList)
+       initIndexAdapter(surveyList)*/
     }
+
 
     private fun initPagerAdapter(surveyList: List<SurveyModel>?) {
         pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveyList)
         viewPager.adapter = pagerAdapter
-        viewPager.setOnSwipeOutListener(object: CustomViewPager.OnSwipeOutListener {
+        viewPager.setOnSwipeOutListener(object : CustomViewPager.OnSwipeOutListener {
             override fun onSwipeOutAtEnd() {
                 currentPage++
 //                loadSurveys(true)
@@ -105,7 +111,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             }
 
             override fun onPageSelected(position: Int) {
-                if(pagerAdapter.count == 0){
+                if (pagerAdapter.count == 0) {
                     return
                 }
 //                indexes.get(lastSelectedPosition).isSelected= false
