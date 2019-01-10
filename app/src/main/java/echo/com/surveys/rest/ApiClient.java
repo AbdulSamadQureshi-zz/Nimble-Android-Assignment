@@ -1,6 +1,5 @@
 package echo.com.surveys.rest;
 
-import android.content.Context;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -19,11 +18,10 @@ public class ApiClient {
     /**
      * get http client for short time
      *
-     * @param context
      * @param baseUrl
      * @return
      */
-    public static Retrofit getClient(final Context context, String baseUrl) {
+    public static Retrofit getClient( String baseUrl) {
         if (retrofit == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             // set your desired log level
@@ -54,11 +52,10 @@ public class ApiClient {
     /**
      * get http client for long time
      *
-     * @param context
      * @param baseUrl
      * @return
      */
-    public static Retrofit getLongTimeClient(final Context context, String baseUrl) {
+    public static Retrofit getLongTimeClient(String baseUrl) {
         if (retrofit == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             // set your desired log level

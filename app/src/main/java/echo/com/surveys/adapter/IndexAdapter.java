@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import echo.com.surveys.R;
-import echo.com.surveys.model.Survey;
+import echo.com.surveys.model.SurveyModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class IndexAdapter extends RecyclerView.Adapter {
 
-    ArrayList<Survey> indexList;
+    List<SurveyModel> indexList;
 
-    public IndexAdapter(ArrayList<Survey> indexList) {
+    public IndexAdapter(List<SurveyModel> indexList) {
         this.indexList = indexList;
     }
 
@@ -48,7 +48,7 @@ public class IndexAdapter extends RecyclerView.Adapter {
             imageView = itemView.findViewById(R.id.indexer);
         }
 
-        public void bindData(Survey survey) {
+        public void bindData(SurveyModel survey) {
             imageView.setImageResource(survey.isSelected() ? R.drawable.shape_circle_filled : R.drawable.shape_circle_empty);
         }
     }
