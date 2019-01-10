@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import echo.com.surveys.R;
 import echo.com.surveys.model.SurveyModel;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -38,6 +39,13 @@ public class IndexAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return indexList.size();
+    }
+
+    public void addItems(@Nullable List<SurveyModel> surveyList) {
+        if(surveyList != null && surveyList.size() >0) {
+            indexList.addAll(surveyList);
+            notifyDataSetChanged();
+        }
     }
 
     public class IndexViewHolder extends RecyclerView.ViewHolder {

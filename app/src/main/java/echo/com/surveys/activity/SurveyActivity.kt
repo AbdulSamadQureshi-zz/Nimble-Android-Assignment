@@ -35,8 +35,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     lateinit var indexAdapter: IndexAdapter
     lateinit var surveyViewModel: SurveyViewModel
     var lastSelectedPosition = 0
-    val PAGE_SIZE = 5
-    var currentPage = 1
 
     //    var surveys: ArrayList<Survey> = ArrayList()
 //    var indexes: ArrayList<Survey> = ArrayList()
@@ -67,39 +65,45 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
         if (isNetworkConnected(this)) {
             showProgress()
-            if(sharedPrefUtility.auth != null) {
-                surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth.accessToken)
-            } else {
-                surveyViewModel.getAccessToken(sharedPrefUtility)
-            }
-
+            loadSurveysForFirstTime()
         } else {
             Toast.makeText(this, "No Internet found, Showing cache list in the view", Toast.LENGTH_SHORT).show()
         }
+        initPagerAdapter(ArrayList())
+        initIndexAdapter(ArrayList())
 
-        surveyViewModel.getAllSurveys().observe(this, Observer<List<SurveyModel>> { surveyList ->
-            Log.e(SurveyActivity::currentPage.javaClass.simpleName, surveyList.toString())
+        surveyViewModel.getAllSurveysFromDb().observe(this, Observer<List<SurveyModel>> { surveyList ->
+            Log.e(SurveyActivity::class.java.javaClass.simpleName, surveyList.toString())
             hideProgres()
-            initPagerAdapter(surveyList)
-            initIndexAdapter(surveyList)
+            pagerAdapter.addItems(surveyList)
+            indexAdapter.addItems(surveyList)
         })
-        /*initPagerAdapter(surveyList)
-       initIndexAdapter(surveyList)*/
     }
 
 
+    private fun loadSurveysForFirstTime(){
+        if(sharedPrefUtility.auth != null) {
+            surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth.accessToken)
+        } else {
+            surveyViewModel.getAccessToken(sharedPrefUtility)
+        }
+    }
     private fun initPagerAdapter(surveyList: List<SurveyModel>?) {
         pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveyList)
         viewPager.adapter = pagerAdapter
         viewPager.setOnSwipeOutListener(object : CustomViewPager.OnSwipeOutListener {
             override fun onSwipeOutAtEnd() {
-                currentPage++
-//                loadSurveys(true)
+                if(sharedPrefUtility.auth != null){
+                    surveyViewModel.getSurveys(sharedPrefUtility.auth?.accessToken!!)
+                } else {
+                    surveyViewModel.getAccessToken(sharedPrefUtility)
+                }
+
 //                Toast.makeText(this@SurveyActivity,"End",Toast.LENGTH_SHORT).show()
             }
 
             override fun onSwipeOutAtStart() {
-//                reloadData()
+                loadSurveysForFirstTime()
 //                Toast.makeText(this@SurveyActivity,"Start",Toast.LENGTH_SHORT).show()
             }
         })
@@ -182,16 +186,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 //
 //    }
 
-//    fun updateViewPager(newSurveys: List<Survey>) {
-//        surveys.addAll(newSurveys)
-//        pagerAdapter.notifyDataSetChanged()
-//    }
-//
-//    fun updateIndexRecyclerView(newIndixes: List<Survey>) {
-//        indexes.addAll(newIndixes)
-//        indexAdapter.notifyDataSetChanged()
-//    }
-
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -213,7 +207,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_refresh -> {
-//                reloadData()
+                loadSurveysForFirstTime()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

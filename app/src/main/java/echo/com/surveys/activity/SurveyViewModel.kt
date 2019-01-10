@@ -12,12 +12,16 @@ class SurveyViewModel : ViewModel() {
             surveyRepository = SurveyRepository()
     }
 
-    fun getAllSurveys(): LiveData<List<SurveyModel>>{
-        return surveyRepository.getSurveys()
+    fun getAllSurveysFromDb(): LiveData<List<SurveyModel>>{
+        return surveyRepository.getSurveysFromDb()
     }
 
     fun getSurveysFromApiAndStore(token: String){
-        surveyRepository.ApiCallAndPutInDB(token)
+        surveyRepository.reloadSurveys(token)
+    }
+
+    fun getSurveys(token: String){
+        surveyRepository.getSurveys(token)
     }
 
     fun getAccessToken(sharedPrefUtility: SharedPrefUtility) {

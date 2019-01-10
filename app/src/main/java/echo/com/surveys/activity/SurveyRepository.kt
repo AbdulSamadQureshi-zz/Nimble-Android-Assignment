@@ -13,20 +13,29 @@ import retrofit2.Response
 
 class SurveyRepository{
     val PAGE_SIZE = 5
-    var currentPage = 1
+    var currentPage = 0
 
 
-    fun getSurveys(): LiveData<List<SurveyModel>> {
+    fun getSurveysFromDb(): LiveData<List<SurveyModel>> {
         return SurveyApplication.database!!.surveyDao().getAllSurveys()
     }
 
-    fun ApiCallAndPutInDB(token:String) {
+    fun reloadSurveys(token:String) {
 
-//        if (showProgress) {
+        currentPage = 0
+
+        Thread(Runnable {
+                SurveyApplication.database!!.surveyDao().deleteAllSurveys()
+        }).start()
+        getSurveys(token)
+    }
+
+    fun getSurveys(token: String){
 //            showProgress()
-//        }
+        currentPage++
         ApiUtils.getAPIService().getSurveys(token,currentPage,PAGE_SIZE).enqueue(object : Callback<List<SurveyModel>> {
             override fun onFailure(call: Call<List<SurveyModel>>, t: Throwable) {
+                currentPage--
 //                hideProgres()
 //                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
             }
@@ -39,13 +48,13 @@ class SurveyRepository{
                         response.body()!![0].isSelected = true
                     }
                     Thread(Runnable {
-                        SurveyApplication.database!!.surveyDao().deleteAllSurveys()
                         SurveyApplication.database!!.surveyDao().insertAllSurveys(response.body()!!)
                     }).start()
 
 //                    updateIndexRecyclerView(response.body()!!)
 //                    updateViewPager(response.body()!!)
                 } else {
+                    currentPage--
                     if(response.code() == 200){
 //                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.no_more_surveys))
                     } else {
@@ -70,7 +79,7 @@ class SurveyRepository{
 //                hideProgres()
                 if (response.body() != null) {
                     sharedPrefUtility.updateAuth(response.body())
-                    ApiCallAndPutInDB(sharedPrefUtility.auth.accessToken)
+                    reloadSurveys(sharedPrefUtility.auth.accessToken)
                 }
             }
 

@@ -25,5 +25,12 @@ public class SurveyFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return surveys.size();
     }
+
+    public void addItems(List<SurveyModel> newItems){
+        if(newItems != null && newItems.size()>0) {
+            surveys.addAll(newItems);
+            notifyDataSetChanged();
+        }
+    }
 }
 
