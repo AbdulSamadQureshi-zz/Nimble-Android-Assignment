@@ -83,7 +83,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     private fun loadSurveysForFirstTime(){
         if(sharedPrefUtility.auth != null) {
-            surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth.accessToken!!)
+            surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth?.accessToken!!)
         } else {
             surveyViewModel.getAccessToken(sharedPrefUtility)
         }

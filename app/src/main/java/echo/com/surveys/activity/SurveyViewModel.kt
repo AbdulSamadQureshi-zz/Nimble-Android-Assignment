@@ -6,7 +6,7 @@ import echo.com.surveys.model.SurveyModel
 import echo.com.surveys.util.SharedPrefUtility
 
 class SurveyViewModel : ViewModel() {
-    lateinit var surveyRepository: SurveyRepository
+     var surveyRepository: SurveyRepository
 
     init {
             surveyRepository = SurveyRepository()

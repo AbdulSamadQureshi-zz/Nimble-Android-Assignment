@@ -21,7 +21,7 @@ public class TokenAuthenticator implements Authenticator {
     public Request authenticate(Route route, okhttp3.Response response) throws IOException {
         if (response.code() == 400 &&  response.body()!= null && TextUtils.isEmpty(response.body().toString())) {
             //make it as retrofit synchronous call
-            Response<Auth> refreshResponse = ApiUtils.getAPIService().getToken(new AuthRequest()).execute();
+            Response<Auth> refreshResponse = ApiUtils.INSTANCE.getApiService().getToken(new AuthRequest()).execute();
             if (refreshResponse != null && refreshResponse.code() == 200) {
                 String newToken = updateRefreshToken(refreshResponse.body());
                 String oldToken = response.request().url().queryParameter("access_token");
@@ -35,7 +35,7 @@ public class TokenAuthenticator implements Authenticator {
     }
 
     private String updateRefreshToken(Auth auth){
-        sharedPrefUtility.savePrefrences(Constants.Keys.AUTH, auth);
+        sharedPrefUtility.savePrefrences(Constants.Keys.INSTANCE.getAUTH(), auth);
         return auth.getAccessToken();
     }
 

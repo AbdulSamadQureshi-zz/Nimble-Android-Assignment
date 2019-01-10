@@ -12,7 +12,7 @@ class IndexAdapter(internal var indexList: MutableList<SurveyModel>) :
     RecyclerView.Adapter<IndexAdapter.IndexViewHolder>() {
 
     override fun onBindViewHolder(holder: IndexViewHolder, position: Int) {
-        (holder as IndexViewHolder).bindData(indexList[position])
+        holder.bindData(indexList[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndexViewHolder {

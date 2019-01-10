@@ -33,7 +33,7 @@ class SurveyRepository{
     fun getSurveys(token: String){
 //            showProgress()
         currentPage++
-        ApiUtils.getAPIService().getSurveys(token,currentPage,PAGE_SIZE).enqueue(object : Callback<List<SurveyModel>> {
+        ApiUtils.apiService.getSurveys(token,currentPage,PAGE_SIZE).enqueue(object : Callback<List<SurveyModel>> {
             override fun onFailure(call: Call<List<SurveyModel>>, t: Throwable) {
                 currentPage--
 //                hideProgres()
@@ -69,7 +69,7 @@ class SurveyRepository{
     fun getAccessToken(sharedPrefUtility: SharedPrefUtility) {
         val authRequest = AuthRequest()
 //        showProgress()
-        ApiUtils.getAPIService().getToken(authRequest).enqueue(object : Callback<Auth> {
+        ApiUtils.apiService.getToken(authRequest).enqueue(object : Callback<Auth> {
             override fun onFailure(call: Call<Auth>, t: Throwable) {
 //                hideProgres()
 //                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
@@ -78,8 +78,8 @@ class SurveyRepository{
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
 //                hideProgres()
                 if (response.body() != null) {
-                    sharedPrefUtility.updateAuth(response.body())
-                    reloadSurveys(sharedPrefUtility.auth.accessToken!!)
+                    sharedPrefUtility.updateAuth(response.body()!!)
+                    reloadSurveys(sharedPrefUtility.auth?.accessToken!!)
                 }
             }
 

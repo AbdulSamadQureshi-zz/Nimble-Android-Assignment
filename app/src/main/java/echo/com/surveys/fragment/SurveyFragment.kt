@@ -26,12 +26,8 @@ class SurveyFragment : BaseFragment() {
     }
 
     protected fun initializeResources() {
-        //        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        //        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        //        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-
         binding.survey = survey
-        ImageUtil.loadResizedImage(activity, binding.image, survey.getHDUrl())
+        ImageUtil.loadResizedImage(activity!!, binding.image, survey.getHDUrl())
     }
 
     override fun handleBundle() {
