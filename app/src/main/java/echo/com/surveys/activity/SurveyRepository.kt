@@ -79,7 +79,7 @@ class SurveyRepository{
 //                hideProgres()
                 if (response.body() != null) {
                     sharedPrefUtility.updateAuth(response.body())
-                    reloadSurveys(sharedPrefUtility.auth.accessToken)
+                    reloadSurveys(sharedPrefUtility.auth.accessToken!!)
                 }
             }
 

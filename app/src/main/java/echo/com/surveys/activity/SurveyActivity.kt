@@ -83,13 +83,13 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     private fun loadSurveysForFirstTime(){
         if(sharedPrefUtility.auth != null) {
-            surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth.accessToken)
+            surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth.accessToken!!)
         } else {
             surveyViewModel.getAccessToken(sharedPrefUtility)
         }
     }
     private fun initPagerAdapter(surveyList: List<SurveyModel>?) {
-        pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveyList)
+        pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveyList!! as MutableList<SurveyModel>)
         viewPager.adapter = pagerAdapter
         viewPager.setOnSwipeOutListener(object : CustomViewPager.OnSwipeOutListener {
             override fun onSwipeOutAtEnd() {
@@ -131,7 +131,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     private fun initIndexAdapter(surveyList: List<SurveyModel>?) {
         recyclerView.layoutManager = LinearLayoutManager(this@SurveyActivity, LinearLayoutManager.VERTICAL, false)
-        indexAdapter = IndexAdapter(surveyList)
+        indexAdapter = IndexAdapter(surveyList as MutableList<SurveyModel>)
         recyclerView.adapter = indexAdapter
 
     }
