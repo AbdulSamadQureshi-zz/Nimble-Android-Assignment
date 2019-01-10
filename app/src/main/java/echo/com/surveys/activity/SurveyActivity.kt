@@ -120,8 +120,10 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
                 }
 //                indexes.get(lastSelectedPosition).isSelected= false
 //                indexes.get(position).isSelected= true
-                lastSelectedPosition = position
+                indexAdapter.indexList.get(lastSelectedPosition).isSelected = false
+                indexAdapter.indexList.get(position).isSelected = true
                 indexAdapter.notifyDataSetChanged()
+                lastSelectedPosition = position
             }
 
         })
@@ -133,58 +135,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         recyclerView.adapter = indexAdapter
 
     }
-
-
-//    fun getAccessToken() {
-//        val authRequest = AuthRequest()
-//        showProgress()
-//        ApiUtils.getAPIService().getToken(authRequest).enqueue(object : Callback<Auth> {
-//            override fun onFailure(call: Call<Auth>, t: Throwable) {
-//                hideProgres()
-//                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
-//            }
-//
-//            override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
-//                hideProgres()
-//                if (response.body() != null) {
-//                    sharedPrefUtility?.updateAuth(response.body())
-//                    loadSurveys(false)
-//                }
-//            }
-//
-//        })
-//    }
-
-//    fun loadSurveys(showProgress: Boolean) {
-//        val token = sharedPrefUtility?.auth?.accessToken
-//        if (showProgress) {
-//            showProgress()
-//        }
-//        ApiUtils.getAPIService(this).getSurveys(token,currentPage,PAGE_SIZE).enqueue(object : Callback<List<Survey>> {
-//            override fun onFailure(call: Call<List<SurveyModel>>, t: Throwable) {
-//                hideProgres()
-//                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
-//            }
-//
-//            override fun onResponse(call: Call<List<SurveyModel>>, response: Response<List<Survey>>) {
-//                hideProgres()
-//                if (response.body() != null) {
-//                    if(surveys.size == 0 && response.body()!!.isNotEmpty()){
-//                        response.body()!![0].isSelected = true
-//                    }
-//                    updateIndexRecyclerView(response.body()!!)
-//                    updateViewPager(response.body()!!)
-//                } else {
-//                    if(response.code() == 200){
-//                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.no_more_surveys))
-//                    } else {
-//                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
-//                    }
-//                }
-//            }
-//        })
-//
-//    }
 
 
     override fun onBackPressed() {

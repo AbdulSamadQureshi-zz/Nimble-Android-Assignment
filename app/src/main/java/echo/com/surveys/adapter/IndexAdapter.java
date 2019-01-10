@@ -60,5 +60,9 @@ public class IndexAdapter extends RecyclerView.Adapter {
             imageView.setImageResource(survey.isSelected() ? R.drawable.shape_circle_filled : R.drawable.shape_circle_empty);
         }
     }
+
+    public List<SurveyModel> getIndexList() {
+        return indexList;
+    }
 }
 
