@@ -63,16 +63,10 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
-        if (isNetworkConnected(this)) {
-            loadSurveysForFirstTime()
-        } else {
-            Toast.makeText(this, "No Internet found, Showing cache list in the view", Toast.LENGTH_SHORT).show()
-        }
         initPagerAdapter(ArrayList())
         initIndexAdapter(ArrayList())
-
-        surveyViewModel.getState().observe(this, Observer {
+        surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
+        surveyViewModel.getNetworkState().observe(this, Observer {
             if(it?.isFetching!!){
                 showProgress()
             }else {
@@ -82,16 +76,19 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
         surveyViewModel.getSurveys().observe(this, Observer<List<SurveyModel>> { surveyList ->
             Log.e(SurveyActivity::class.java.javaClass.simpleName, surveyList.toString())
-            surveyViewModel.setSurveyFetchingState(false)
             pagerAdapter.addItems(surveyList)
             indexAdapter.addItems(surveyList)
         })
 
+        if (isNetworkConnected(this)) {
+            loadSurveysForFirstTime()
+        } else {
+            Toast.makeText(this, "No Internet found", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
-
     private fun loadSurveysForFirstTime(){
-        surveyViewModel.setSurveyFetchingState(true)
         if(sharedPrefUtility.auth != null) {
             surveyViewModel.getSurveysFromApi(sharedPrefUtility.auth?.accessToken!!)
         } else {
@@ -103,7 +100,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         viewPager.adapter = pagerAdapter
         viewPager.setOnSwipeOutListener(object : CustomViewPager.OnSwipeOutListener {
             override fun onSwipeOutAtEnd() {
-                surveyViewModel.setSurveyFetchingState(true)
                 if(sharedPrefUtility.auth != null){
                     surveyViewModel.loadSurveys(sharedPrefUtility.auth?.accessToken!!)
                 } else {
