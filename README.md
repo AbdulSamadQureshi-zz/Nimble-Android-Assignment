@@ -19,7 +19,7 @@ Things that should have added:
 - Fabric
 - SonarCube
 - Proguard
-
+- Product Flavours
 
 Notes:
 - Could not move to AndroidX just for verticalViewPager library, its old and could not get migrated to AndroidX
