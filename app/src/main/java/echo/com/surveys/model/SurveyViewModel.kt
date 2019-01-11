@@ -2,6 +2,7 @@ package echo.com.surveys.model
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import echo.com.surveys.state.MessageState
 import echo.com.surveys.state.NetworkState
 import echo.com.surveys.util.SharedPrefUtility
 
@@ -28,6 +29,10 @@ class SurveyViewModel : ViewModel() {
 
     fun getAccessToken(sharedPrefUtility: SharedPrefUtility) {
         surveyRepository.getAccessToken(sharedPrefUtility)
+    }
+
+    fun getMessageState(): LiveData<MessageState>{
+        return surveyRepository.getMessageState()
     }
 }
 

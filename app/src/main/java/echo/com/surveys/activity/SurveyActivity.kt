@@ -22,6 +22,7 @@ import echo.com.surveys.adapter.IndexAdapter
 import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
 import echo.com.surveys.model.SurveyModel
 import echo.com.surveys.model.SurveyViewModel
+import echo.com.surveys.util.DialogUtils
 import echo.com.surveys.util.SharedPrefUtility
 import echo.com.surveys.view.CustomViewPager
 import kotlinx.android.synthetic.main.app_bar_survey.*
@@ -66,6 +67,11 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         initPagerAdapter(ArrayList())
         initIndexAdapter(ArrayList())
         surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
+
+        surveyViewModel.getMessageState().observe(this, Observer {
+            DialogUtils.showToast(this,it?.message!!)
+        })
+
         surveyViewModel.getNetworkState().observe(this, Observer {
             if(it?.isFetching!!){
                 showProgress()

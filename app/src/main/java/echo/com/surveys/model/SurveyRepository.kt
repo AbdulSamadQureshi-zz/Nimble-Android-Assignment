@@ -3,6 +3,7 @@ package echo.com.surveys.model
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import echo.com.surveys.rest.ApiUtils
+import echo.com.surveys.state.MessageState
 import echo.com.surveys.state.NetworkState
 import echo.com.surveys.util.SharedPrefUtility
 import retrofit2.Call
@@ -14,7 +15,8 @@ class SurveyRepository{
     var currentPage = 0
     private val surveyList = ArrayList<SurveyModel>()
     private val surveys = MutableLiveData<List<SurveyModel>>()
-    private val state = MutableLiveData<NetworkState>()
+    private val networkState = MutableLiveData<NetworkState>()
+    private val messageState = MutableLiveData<MessageState>()
 
     fun getSurveys() : LiveData<List<SurveyModel>>{
         return surveys
@@ -35,6 +37,7 @@ class SurveyRepository{
             override fun onFailure(call: Call<List<SurveyModel>>, t: Throwable) {
                 currentPage--
                 setNetworkState(false)
+                setMessageState("Something went wrong, please try again later...")
 //                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
             }
 
@@ -50,9 +53,10 @@ class SurveyRepository{
                 } else {
                     currentPage--
                     if(response.code() == 200){
-//                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.no_more_surveys))
+//                        TODO use strings.xml for strings
+                        setMessageState("No more surveys available...")
                     } else {
-//                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                        setMessageState("Something went wrong, please try again later...")
                     }
                 }
             }
@@ -66,11 +70,10 @@ class SurveyRepository{
         ApiUtils.apiService.getToken(authRequest).enqueue(object : Callback<Auth> {
             override fun onFailure(call: Call<Auth>, t: Throwable) {
                 setNetworkState(false)
-//                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
+                setMessageState("Something went wrong, please try again later...")
             }
 
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
-//                hideProgres()
                 setNetworkState(false)
                 if (response.body() != null) {
                     sharedPrefUtility.updateAuth(response.body()!!)
@@ -82,11 +85,19 @@ class SurveyRepository{
     }
 
     fun getNetworkState(): LiveData<NetworkState> {
-        return state
+        return networkState
     }
 
     fun setNetworkState(isFetching: Boolean) {
-        state.value = NetworkState(isFetching)
+        networkState.value = NetworkState(isFetching)
+    }
+
+    fun getMessageState(): LiveData<MessageState> {
+        return messageState
+    }
+
+    fun setMessageState(message: String) {
+        messageState.value = MessageState(message)
     }
 
 }
