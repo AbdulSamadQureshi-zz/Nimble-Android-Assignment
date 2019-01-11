@@ -2,6 +2,8 @@ package echo.com.surveys.model
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import echo.com.surveys.R
+import echo.com.surveys.SurveyApplication
 import echo.com.surveys.rest.ApiUtils
 import echo.com.surveys.state.MessageState
 import echo.com.surveys.state.NetworkState
@@ -37,7 +39,7 @@ class SurveyRepository{
             override fun onFailure(call: Call<List<SurveyModel>>, t: Throwable) {
                 currentPage--
                 setNetworkState(false)
-                setMessageState("Something went wrong, please try again later...")
+                setMessageState(SurveyApplication.instance!!.getString(R.string.general_error))
 //                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
             }
 
@@ -53,10 +55,9 @@ class SurveyRepository{
                 } else {
                     currentPage--
                     if(response.code() == 200){
-//                        TODO use strings.xml for strings
-                        setMessageState("No more surveys available...")
+                        setMessageState(SurveyApplication.instance!!.getString(R.string.no_more_surveys))
                     } else {
-                        setMessageState("Something went wrong, please try again later...")
+                        setMessageState(SurveyApplication.instance!!.getString(R.string.general_error))
                     }
                 }
             }
@@ -70,7 +71,7 @@ class SurveyRepository{
         ApiUtils.apiService.getToken(authRequest).enqueue(object : Callback<Auth> {
             override fun onFailure(call: Call<Auth>, t: Throwable) {
                 setNetworkState(false)
-                setMessageState("Something went wrong, please try again later...")
+                setMessageState(SurveyApplication.instance!!.getString(R.string.general_error))
             }
 
             override fun onResponse(call: Call<Auth>, response: Response<Auth>) {

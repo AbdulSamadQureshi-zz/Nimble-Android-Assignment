@@ -18,7 +18,7 @@ Things that should have added:
 - Crashlytics
 - Fabric
 - SonarCube
-
+-
 
 Notes:
 - Could not move to AndroidX just for verticalViewPager library, its old and could not get migrated to AndroidX
