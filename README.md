@@ -1,8 +1,22 @@
 # Nimble-Android-Assignment
 
-AndroidX:
 
+Other used components:
+- MVVM (Android architecture components)
+- Kotlin
+- DataBinding
+- ViewHolderPattern
+- Authenticator to refresh the expired token (TokenAuthenticator)
+- Vertical ViewPager with pagination (page size 5)
+- Dagger(v-2.9) is used, but not to its full strength
+
+Things that should have added:
+- FastLane/Bitrise
+- Crashlytics
+- Fabric
+- SonarCube
+
+
+Notes:
 - Could not move to AndroidX just for verticalViewPager library, its old and could not get migrated to AndroidX
-- Dagger is used, but not to its full strength
-- Android architecture components used
-- Test coverage is not added.
+- Test coverage is not added (Expresso for UI, jUnit for unitTests)
