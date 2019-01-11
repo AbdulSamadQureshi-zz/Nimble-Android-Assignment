@@ -38,8 +38,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     lateinit var surveyViewModel: SurveyViewModel
     var lastSelectedPosition = 0
 
-    //    var surveys: ArrayList<Survey> = ArrayList()
-//    var indexes: ArrayList<Survey> = ArrayList()
     @Inject
     lateinit var sharedPrefUtility: SharedPrefUtility
 
@@ -85,9 +83,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             if (surveyList != null) {
                 pagerAdapter.addItems(surveyList)
                 indexAdapter.addItems(surveyList)
-
-//                initPagerAdapter(surveyList)
-//                initIndexAdapter(surveyList)
             }
 
         })
@@ -150,6 +145,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun initIndexAdapter(surveyList: List<SurveyModel>?) {
+        lastSelectedPosition = 0
         recyclerView.layoutManager = LinearLayoutManager(this@SurveyActivity, LinearLayoutManager.VERTICAL, false)
         indexAdapter = IndexAdapter(surveyList as MutableList<SurveyModel>)
         recyclerView.adapter = indexAdapter
@@ -177,6 +173,8 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_refresh -> {
+                initPagerAdapter(ArrayList())
+                initIndexAdapter(ArrayList())
                 loadSurveysForFirstTime()
                 return true
             }
