@@ -9,6 +9,9 @@ Other used components:
 - Authenticator to refresh the expired token (TokenAuthenticator)
 - Vertical ViewPager with pagination (page size 5)
 - Dagger(v-2.9) is used, but not to its full strength
+- Retrofit
+- Constraint Layout
+
 
 Things that should have added:
 - FastLane/Bitrise
