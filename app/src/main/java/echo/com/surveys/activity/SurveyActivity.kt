@@ -64,7 +64,6 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
         surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
         if (isNetworkConnected(this)) {
-            showProgress()
             loadSurveysForFirstTime()
         } else {
             Toast.makeText(this, "No Internet found, Showing cache list in the view", Toast.LENGTH_SHORT).show()
@@ -72,16 +71,26 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         initPagerAdapter(ArrayList())
         initIndexAdapter(ArrayList())
 
+        surveyViewModel.getState().observe(this, Observer {
+            if(it?.isFetching!!){
+                showProgress()
+            }else {
+                hideProgres()
+            }
+        })
+
         surveyViewModel.getAllSurveysFromDb().observe(this, Observer<List<SurveyModel>> { surveyList ->
             Log.e(SurveyActivity::class.java.javaClass.simpleName, surveyList.toString())
-            hideProgres()
+            surveyViewModel.setSurveyFetchingState(false)
             pagerAdapter.addItems(surveyList)
             indexAdapter.addItems(surveyList)
         })
+
     }
 
 
     private fun loadSurveysForFirstTime(){
+        surveyViewModel.setSurveyFetchingState(true)
         if(sharedPrefUtility.auth != null) {
             surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth?.accessToken!!)
         } else {
@@ -93,6 +102,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         viewPager.adapter = pagerAdapter
         viewPager.setOnSwipeOutListener(object : CustomViewPager.OnSwipeOutListener {
             override fun onSwipeOutAtEnd() {
+                surveyViewModel.setSurveyFetchingState(true)
                 if(sharedPrefUtility.auth != null){
                     surveyViewModel.getSurveys(sharedPrefUtility.auth?.accessToken!!)
                 } else {
