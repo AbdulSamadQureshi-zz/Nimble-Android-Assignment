@@ -1,5 +1,9 @@
 package echo.com.surveys.activity
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -7,49 +11,41 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
-import android.text.TextUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import echo.com.surveys.R
 import echo.com.surveys.SurveyApplication
 import echo.com.surveys.adapter.IndexAdapter
 import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
-import echo.com.surveys.model.Auth
-import echo.com.surveys.model.AuthRequest
-import echo.com.surveys.model.Survey
-import echo.com.surveys.rest.ApiUtils
+import echo.com.surveys.model.SurveyModel
+import echo.com.surveys.model.SurveyViewModel
 import echo.com.surveys.util.DialogUtils
 import echo.com.surveys.util.SharedPrefUtility
 import echo.com.surveys.view.CustomViewPager
 import kotlinx.android.synthetic.main.app_bar_survey.*
 import kotlinx.android.synthetic.main.content_survey.*
 import kotlinx.android.synthetic.main.layout_survey_activity.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
-
-
 
 
 class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var pagerAdapter: SurveyFragmentPagerAdapter
     lateinit var indexAdapter: IndexAdapter
+    lateinit var surveyViewModel: SurveyViewModel
     var lastSelectedPosition = 0
-    val PAGE_SIZE = 5
-    var currentPage = 1
 
-    var surveys: ArrayList<Survey> = ArrayList()
-    var indexes: ArrayList<Survey> = ArrayList()
     @Inject
     lateinit var sharedPrefUtility: SharedPrefUtility
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_survey_activity)
         setSupportActionBar(toolbar)
-        SurveyApplication.getInstance().component().inject(this)
+        SurveyApplication.instance?.component()?.inject(this)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -65,23 +61,64 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        initPagerAdapter()
-        initIndexAdapter()
-        reloadSurveys()
+
+        initPagerAdapter(ArrayList())
+        initIndexAdapter(ArrayList())
+        surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
+
+        surveyViewModel.getMessageState().observe(this, Observer {
+            DialogUtils.showToast(this, it?.message!!)
+        })
+
+        surveyViewModel.getNetworkState().observe(this, Observer {
+            if (it?.isFetching!!) {
+                showProgress()
+            } else {
+                hideProgres()
+            }
+        })
+
+        surveyViewModel.getSurveys().observe(this, Observer<List<SurveyModel>> { surveyList ->
+            Log.e(SurveyActivity::class.java.javaClass.simpleName, surveyList.toString())
+            if (surveyList != null) {
+                pagerAdapter.addItems(surveyList)
+                indexAdapter.addItems(surveyList)
+            }
+
+        })
+
+        if (isNetworkConnected(this)) {
+            loadSurveysForFirstTime()
+        } else {
+            Toast.makeText(this, "No Internet found", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
-    private fun initPagerAdapter() {
-        pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveys)
+    private fun loadSurveysForFirstTime() {
+        if (sharedPrefUtility.auth != null) {
+            surveyViewModel.getSurveysFromApi(sharedPrefUtility.auth?.accessToken!!)
+        } else {
+            surveyViewModel.getAccessToken(sharedPrefUtility)
+        }
+    }
+
+    private fun initPagerAdapter(surveyList: List<SurveyModel>?) {
+        pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveyList!! as MutableList<SurveyModel>)
         viewPager.adapter = pagerAdapter
-        viewPager.setOnSwipeOutListener(object: CustomViewPager.OnSwipeOutListener {
+        viewPager.setOnSwipeOutListener(object : CustomViewPager.OnSwipeOutListener {
             override fun onSwipeOutAtEnd() {
-                currentPage++
-                loadSurveys(true)
+                if (sharedPrefUtility.auth != null) {
+                    surveyViewModel.loadSurveys(sharedPrefUtility.auth?.accessToken!!)
+                } else {
+                    surveyViewModel.getAccessToken(sharedPrefUtility)
+                }
+
 //                Toast.makeText(this@SurveyActivity,"End",Toast.LENGTH_SHORT).show()
             }
 
             override fun onSwipeOutAtStart() {
-                reloadData()
+                loadSurveysForFirstTime()
 //                Toast.makeText(this@SurveyActivity,"Start",Toast.LENGTH_SHORT).show()
             }
         })
@@ -93,85 +130,26 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             }
 
             override fun onPageSelected(position: Int) {
-                if(indexes.size == 0){
+                if (pagerAdapter.count == 0) {
                     return
                 }
-                indexes.get(lastSelectedPosition).isSelected= false
-                indexes.get(position).isSelected= true
-                lastSelectedPosition = position
+//                indexes.get(lastSelectedPosition).isSelected= false
+//                indexes.get(position).isSelected= true
+                indexAdapter.indexList.get(lastSelectedPosition).isSelected = false
+                indexAdapter.indexList.get(position).isSelected = true
                 indexAdapter.notifyDataSetChanged()
+                lastSelectedPosition = position
             }
 
         })
     }
 
-    private fun initIndexAdapter() {
+    private fun initIndexAdapter(surveyList: List<SurveyModel>?) {
+        lastSelectedPosition = 0
         recyclerView.layoutManager = LinearLayoutManager(this@SurveyActivity, LinearLayoutManager.VERTICAL, false)
-        indexAdapter = IndexAdapter(indexes)
+        indexAdapter = IndexAdapter(surveyList as MutableList<SurveyModel>)
         recyclerView.adapter = indexAdapter
 
-    }
-
-
-    fun getAccessToken() {
-        val authRequest = AuthRequest()
-        showProgress()
-        ApiUtils.getAPIService(this).getToken(authRequest).enqueue(object : Callback<Auth> {
-            override fun onFailure(call: Call<Auth>, t: Throwable) {
-                hideProgres()
-                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
-            }
-
-            override fun onResponse(call: Call<Auth>, response: Response<Auth>) {
-                hideProgres()
-                if (response.body() != null) {
-                    sharedPrefUtility?.updateAuth(response.body())
-                    loadSurveys(false)
-                }
-            }
-
-        })
-    }
-
-    fun loadSurveys(showProgress: Boolean) {
-        val token = sharedPrefUtility?.auth?.accessToken
-        if (showProgress) {
-            showProgress()
-        }
-        ApiUtils.getAPIService(this).getSurveys(token,currentPage,PAGE_SIZE).enqueue(object : Callback<List<Survey>> {
-            override fun onFailure(call: Call<List<Survey>>, t: Throwable) {
-                hideProgres()
-                DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
-            }
-
-            override fun onResponse(call: Call<List<Survey>>, response: Response<List<Survey>>) {
-                hideProgres()
-                if (response.body() != null) {
-                    if(surveys.size == 0 && response.body()!!.isNotEmpty()){
-                        response.body()!![0].isSelected = true
-                    }
-                    updateIndexRecyclerView(response.body()!!)
-                    updateViewPager(response.body()!!)
-                } else {
-                    if(response.code() == 200){
-                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.no_more_surveys))
-                    } else {
-                        DialogUtils.showToast(this@SurveyActivity, getString(R.string.general_error))
-                    }
-                }
-            }
-        })
-
-    }
-
-    fun updateViewPager(newSurveys: List<Survey>) {
-        surveys.addAll(newSurveys)
-        pagerAdapter.notifyDataSetChanged()
-    }
-
-    fun updateIndexRecyclerView(newIndixes: List<Survey>) {
-        indexes.addAll(newIndixes)
-        indexAdapter.notifyDataSetChanged()
     }
 
 
@@ -195,37 +173,15 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_refresh -> {
-                reloadData()
+                initPagerAdapter(ArrayList())
+                initIndexAdapter(ArrayList())
+                loadSurveysForFirstTime()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
 
-    fun reloadData(){
-        currentPage= 1
-        viewPager.setCurrentItem(0, false)
-        reloadSurveys()
-    }
-    fun reloadIndexes() {
-        indexes.clear()
-        indexAdapter.notifyDataSetChanged()
-    }
-
-    fun reloadSurveys() {
-        if (surveys.size > 0) {
-            surveys.clear()
-            pagerAdapter.notifyDataSetChanged()
-            reloadIndexes()
-        }
-
-        val auth = sharedPrefUtility?.auth
-        if (auth != null && !TextUtils.isEmpty(auth.accessToken)) {
-            loadSurveys(true)
-        } else {
-            getAccessToken()
-        }
-    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
@@ -261,4 +217,12 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     fun hideProgres() {
         progressBar.visibility = View.GONE
     }
+
+
+    fun isNetworkConnected(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        return activeNetwork != null && activeNetwork.isConnected
+    }
+
 }
