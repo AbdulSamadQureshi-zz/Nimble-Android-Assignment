@@ -21,6 +21,7 @@ import echo.com.surveys.SurveyApplication
 import echo.com.surveys.adapter.IndexAdapter
 import echo.com.surveys.adapter.SurveyFragmentPagerAdapter
 import echo.com.surveys.model.SurveyModel
+import echo.com.surveys.model.SurveyViewModel
 import echo.com.surveys.util.SharedPrefUtility
 import echo.com.surveys.view.CustomViewPager
 import kotlinx.android.synthetic.main.app_bar_survey.*
@@ -79,7 +80,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             }
         })
 
-        surveyViewModel.getAllSurveysFromDb().observe(this, Observer<List<SurveyModel>> { surveyList ->
+        surveyViewModel.getSurveys().observe(this, Observer<List<SurveyModel>> { surveyList ->
             Log.e(SurveyActivity::class.java.javaClass.simpleName, surveyList.toString())
             surveyViewModel.setSurveyFetchingState(false)
             pagerAdapter.addItems(surveyList)
@@ -92,7 +93,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
     private fun loadSurveysForFirstTime(){
         surveyViewModel.setSurveyFetchingState(true)
         if(sharedPrefUtility.auth != null) {
-            surveyViewModel.getSurveysFromApiAndStore(sharedPrefUtility.auth?.accessToken!!)
+            surveyViewModel.getSurveysFromApi(sharedPrefUtility.auth?.accessToken!!)
         } else {
             surveyViewModel.getAccessToken(sharedPrefUtility)
         }
@@ -104,7 +105,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
             override fun onSwipeOutAtEnd() {
                 surveyViewModel.setSurveyFetchingState(true)
                 if(sharedPrefUtility.auth != null){
-                    surveyViewModel.getSurveys(sharedPrefUtility.auth?.accessToken!!)
+                    surveyViewModel.loadSurveys(sharedPrefUtility.auth?.accessToken!!)
                 } else {
                     surveyViewModel.getAccessToken(sharedPrefUtility)
                 }
