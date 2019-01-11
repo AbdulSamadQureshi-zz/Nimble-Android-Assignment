@@ -1,16 +1,16 @@
 package echo.com.surveys.activity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
-import android.support.v4.view.GravityCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.view.GravityCompat
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -122,7 +122,7 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 //                Toast.makeText(this@SurveyActivity,"Start",Toast.LENGTH_SHORT).show()
             }
         })
-        viewPager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager.setOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
             }
 
@@ -146,7 +146,11 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     private fun initIndexAdapter(surveyList: List<SurveyModel>?) {
         lastSelectedPosition = 0
-        recyclerView.layoutManager = LinearLayoutManager(this@SurveyActivity, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+            this@SurveyActivity,
+            androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+            false
+        )
         indexAdapter = IndexAdapter(surveyList as MutableList<SurveyModel>)
         recyclerView.adapter = indexAdapter
 

@@ -1,6 +1,6 @@
 package echo.com.surveys.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import echo.com.surveys.R
 import echo.com.surveys.model.SurveyModel
 
 class IndexAdapter(internal var indexList: MutableList<SurveyModel>) :
-    RecyclerView.Adapter<IndexAdapter.IndexViewHolder>() {
+    androidx.recyclerview.widget.RecyclerView.Adapter<IndexAdapter.IndexViewHolder>() {
 
     override fun onBindViewHolder(holder: IndexViewHolder, position: Int) {
         holder.bindData(indexList[position])
@@ -39,7 +39,7 @@ class IndexAdapter(internal var indexList: MutableList<SurveyModel>) :
         }
     }
 
-    inner class IndexViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class IndexViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         private val imageView: ImageView
 
         init {

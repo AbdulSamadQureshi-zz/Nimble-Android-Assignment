@@ -1,7 +1,7 @@
 package echo.com.surveys.model
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import echo.com.surveys.rest.ApiUtils
 import echo.com.surveys.state.MessageState
 import echo.com.surveys.state.NetworkState
