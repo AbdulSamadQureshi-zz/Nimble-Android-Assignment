@@ -69,25 +69,27 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
         surveyViewModel = ViewModelProviders.of(this@SurveyActivity).get(SurveyViewModel::class.java)
 
         surveyViewModel.getMessageState().observe(this, Observer {
-            DialogUtils.showToast(this,it?.message!!)
+            DialogUtils.showToast(this, it?.message!!)
         })
 
         surveyViewModel.getNetworkState().observe(this, Observer {
-            if(it?.isFetching!!){
+            if (it?.isFetching!!) {
                 showProgress()
-            }else {
+            } else {
                 hideProgres()
             }
         })
 
         surveyViewModel.getSurveys().observe(this, Observer<List<SurveyModel>> { surveyList ->
             Log.e(SurveyActivity::class.java.javaClass.simpleName, surveyList.toString())
-            if(surveyList != null) {
-                initPagerAdapter(surveyList)
-                initIndexAdapter(surveyList)
+            if (surveyList != null) {
+                pagerAdapter.addItems(surveyList)
+                indexAdapter.addItems(surveyList)
+
+//                initPagerAdapter(surveyList)
+//                initIndexAdapter(surveyList)
             }
-//            pagerAdapter.addItems(surveyList)
-//            indexAdapter.addItems(surveyList)
+
         })
 
         if (isNetworkConnected(this)) {
@@ -98,19 +100,20 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
     }
 
-    private fun loadSurveysForFirstTime(){
-        if(sharedPrefUtility.auth != null) {
+    private fun loadSurveysForFirstTime() {
+        if (sharedPrefUtility.auth != null) {
             surveyViewModel.getSurveysFromApi(sharedPrefUtility.auth?.accessToken!!)
         } else {
             surveyViewModel.getAccessToken(sharedPrefUtility)
         }
     }
+
     private fun initPagerAdapter(surveyList: List<SurveyModel>?) {
         pagerAdapter = SurveyFragmentPagerAdapter(getSupportFragmentManager(), surveyList!! as MutableList<SurveyModel>)
         viewPager.adapter = pagerAdapter
         viewPager.setOnSwipeOutListener(object : CustomViewPager.OnSwipeOutListener {
             override fun onSwipeOutAtEnd() {
-                if(sharedPrefUtility.auth != null){
+                if (sharedPrefUtility.auth != null) {
                     surveyViewModel.loadSurveys(sharedPrefUtility.auth?.accessToken!!)
                 } else {
                     surveyViewModel.getAccessToken(sharedPrefUtility)

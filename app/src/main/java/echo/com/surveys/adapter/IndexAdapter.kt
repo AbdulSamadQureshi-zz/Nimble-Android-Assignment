@@ -33,6 +33,7 @@ class IndexAdapter(internal var indexList: MutableList<SurveyModel>) :
 
     fun addItems(surveyList: List<SurveyModel>?) {
         if (surveyList != null && surveyList.size > 0) {
+            indexList.clear()
             indexList.addAll(surveyList)
             notifyDataSetChanged()
         }
