@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout>
     <data>
-        <variable
-                name="survey"
-                type="echo.com.surveys.model.Survey"/>
+        <variable name="survey" type="echo.com.surveys.model.SurveyModel"/>
     </data>
-
     <android.support.constraint.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -56,7 +54,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:elevation="2dp"
-                android:text="@{survey.description}"
+                android:text="@{survey.title}"
                 android:layout_marginTop="@dimen/margin_16"
                 android:paddingStart="@dimen/survey_title_margin"
                 android:paddingEnd="@dimen/survey_title_margin"
