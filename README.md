@@ -1,6 +1,11 @@
 # Nimble-Android-Assignment
 
 
+App Usage Notes:
+- Please drag viewPager vertically to swipe across the pages
+- When you are on the last page of ViewPager and you drag from bottom to top, next page gets loaded view api
+- When you are on first page of ViewPager and drag from top to bottom, data gets reloaded from page 1.
+
 Other used components:
 - MVVM (Android architecture components)
 - Kotlin
