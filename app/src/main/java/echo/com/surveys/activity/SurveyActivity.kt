@@ -82,8 +82,12 @@ class SurveyActivity : BaseFragmentActivity(), NavigationView.OnNavigationItemSe
 
         surveyViewModel.getSurveys().observe(this, Observer<List<SurveyModel>> { surveyList ->
             Log.e(SurveyActivity::class.java.javaClass.simpleName, surveyList.toString())
-            pagerAdapter.addItems(surveyList)
-            indexAdapter.addItems(surveyList)
+            if(surveyList != null) {
+                initPagerAdapter(surveyList)
+                initIndexAdapter(surveyList)
+            }
+//            pagerAdapter.addItems(surveyList)
+//            indexAdapter.addItems(surveyList)
         })
 
         if (isNetworkConnected(this)) {

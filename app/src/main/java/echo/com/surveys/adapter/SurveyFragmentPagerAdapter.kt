@@ -18,7 +18,7 @@ class SurveyFragmentPagerAdapter(fm: FragmentManager, private val surveys: Mutab
     }
 
     fun addItems(newItems: List<SurveyModel>?) {
-        if (newItems != null && newItems.size > 0) {
+        if (newItems != null && newItems.isNotEmpty()) {
             surveys.addAll(newItems)
             notifyDataSetChanged()
         }
